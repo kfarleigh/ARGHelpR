@@ -1,11 +1,53 @@
-### Sliding argstats arguments
-# arg.dat is a list element that contains a dataframe. The data frame columns should be chromosome, start, end, and the phylogeney estimated in ARG analysis
-# pop1 is a vector of individuals in one population
-# pop2 is a vector of individuals in the other populations
-# pop1.name is a character string, that tells us the name of population 1
-# pop2.name is a character string, that tells us the name of population 2
-
+#' Calculate ancestral recombination graph statistics
+#'
+#' @param arg.dat a list element that contains a dataframe. The data frame columns should be chromosome, start, end, and the phylogeney estimated in ARG analysis.
+#' @param pop1 a vector of individuals in one population.
+#' @param pop2 a vector of individuals in the other population.
+#' @param pop1.name a character string that tells us the name of population 1.
+#' @param pop2.name a character string that tells us the name of population 2.
+#'
+#' @returns A data frame containing the calculated statistics, the relevant window, and relevant arg. The statistics include the time to the most recent common ancestor between populations/species (tmrca) and estimates of the time to most recent common ancestor within populations/species (tmrcaw). The output also indicates if populations/species are monophyletic and which population/species corresponds to which population.
+#' @author Keaka Farleigh
+#' @export
+#'
+#' @examples
+#' \donttest{
+#' Test <- argstats(arg.dat = rattlesnake_args, pop1 = pop1_inds, pop2 = pop2_inds, pop1.name = "continental", pop2.name = "stephensi")}
 argstats <- function(arg.dat, pop1, pop2, pop1.name, pop2.name){
+
+  is.child <- n.pop1 <- n.pop2 <- NULL
+
+  # Function to identify clades in the data.
+  identify_clade <- function(dat, pop1, pop2, tip_idx){
+
+    prop.df <- data.frame(node = NA, prop.pop1 = NA, prop.pop2 = NA, n.ind = NA, n.pop1 = NA, n.pop2 = NA)
+
+    pop1.inds <- pop1
+    pop2.inds <- pop2
+
+    dat <- dat
+
+    n.pop1 <- length(which(tip_idx[dat] %in% pop1.inds))
+    n.pop2 <- length(which(tip_idx[dat] %in% pop2.inds))
+
+    prop.pop1 <- n.pop1/length(pop1.inds)
+    prop.pop2 <- n.pop2/length(pop2.inds)
+
+    n.ind <- length(dat)
+
+    prop.df[1,2] <- prop.pop1
+    prop.df[1,3] <- prop.pop2
+    prop.df[1,4] <- n.ind
+    prop.df[1,5] <- n.pop1
+    prop.df[1,6] <- n.pop2
+
+    remove(pop1.inds, pop2.inds, n.pop1, n.pop2, prop.pop1, prop.pop2, n.ind, dat)
+
+    return(prop.df)
+
+
+  }
+
 
   ### Create a data frame to store results
   arg.stats.df <- data.frame(chromosome = arg.dat$chromosome,
@@ -28,19 +70,19 @@ argstats <- function(arg.dat, pop1, pop2, pop1.name, pop2.name){
 
   nwk <- arg.dat$tree[i]
 
-  tree <- read.tree(text = nwk)
+  tree <- ape::read.tree(text = nwk)
 
   # Get the TMRCA for the tree
-  tmrca <- max(nodeHeights(tree))
+  tmrca <- max(phytools::nodeHeights(tree))
 
   # Get cross-coalescent events for each population/species
-  pop1_dist <- findMRCA(tree, tips = pop1, type = "height")
+  pop1_dist <- phytools::findMRCA(tree, tips = pop1, type = "height")
 
-  pop2_dist <- findMRCA(tree, tips = pop2, type = "height")
+  pop2_dist <- phytools::findMRCA(tree, tips = pop2, type = "height")
 
   arg.stats.df[i,4] <- tmrca
 
-  if(is.monophyletic(tree, tips= pop1)){
+  if(ape::is.monophyletic(tree, tips= pop1)){
 
 
     # This is height from the root, which gives us the opposite of what we want; testing showed this to be equivalent to extracting a clade and working up from there
@@ -56,7 +98,7 @@ argstats <- function(arg.dat, pop1, pop2, pop1.name, pop2.name){
 
     # Get a list of nodes and their descendants
 
-    all_nodes <- Descendants(tree, type = "tips")
+    all_nodes <- phangorn::Descendants(tree, type = "tips")
     tip_idx <- tree$tip.label
 
     test <- lapply(all_nodes, identify_clade, pop1 = pop1, pop2 = pop2, tip_idx = tip_idx)
@@ -66,7 +108,7 @@ argstats <- function(arg.dat, pop1, pop2, pop1.name, pop2.name){
     test.df$node <- paste(1:length(all_nodes))
 
     # Remove nodes with only 1 individual and filter for only nodes where there are no contiental individuals
-    pop1.df.filt <- test.df %>% filter(n.pop1 > 1, n.pop2 == 0)
+    pop1.df.filt <- test.df %>% dplyr::filter(n.pop1 > 1, n.pop2 == 0)
 
     if(nrow(pop1.df.filt) > 0){
 
@@ -76,12 +118,12 @@ argstats <- function(arg.dat, pop1, pop2, pop1.name, pop2.name){
 
         nodes <- pop1.df.filt[,1]
 
-        which(nodes %in% getDescendants(tree, node = pop1.df.filt$node[j],))
+        which(nodes %in% phytools::getDescendants(tree, node = pop1.df.filt$node[j],))
 
         prop.child[j,1] <- pop1.df.filt$node[j]
-        prop.child[j,2] <- length(which(nodes %in% getDescendants(tree, node = pop1.df.filt$node[j],)))
+        prop.child[j,2] <- length(which(nodes %in% phytools::getDescendants(tree, node = pop1.df.filt$node[j],)))
 
-        if(any(Ancestors(tree, pop1.df.filt$node[j], type = "all") %in% nodes)){
+        if(any(phangorn::Ancestors(tree, pop1.df.filt$node[j], type = "all") %in% nodes)){
 
           prop.child[j,3] <- TRUE
 
@@ -94,15 +136,15 @@ argstats <- function(arg.dat, pop1, pop2, pop1.name, pop2.name){
       }
 
       # Only select nodes where is.child == FALSE for calculations
-      prop.child.filt <- prop.child %>% filter(is.child == FALSE)
+      prop.child.filt <- prop.child %>% dplyr::filter(is.child == FALSE)
 
       # Calculate tmrca-within
       tmrca_w <- c()
       for(k in 1:nrow(prop.child.filt)){
 
-        tips <- getDescendants(tree, node = prop.child.filt$node[k])
+        tips <- phytools::getDescendants(tree, node = prop.child.filt$node[k])
 
-        pop1_dist <- findMRCA(tree, tips = tips, type = "height")
+        pop1_dist <- phytools::findMRCA(tree, tips = tips, type = "height")
         pop1.fix <- tmrca - pop1_dist
 
         tmrca_w <- c(tmrca_w, pop1.fix)
@@ -112,7 +154,7 @@ argstats <- function(arg.dat, pop1, pop2, pop1.name, pop2.name){
       }
 
       arg.stats.df[i,5] <- mean(tmrca_w)
-      arg.stats.df[i,6] <- median(tmrca_w)
+      arg.stats.df[i,6] <- stats::median(tmrca_w)
       arg.stats.df[i,7] <- min(tmrca_w)
       arg.stats.df[i,8] <- max(tmrca_w)
       arg.stats.df[i,9] <- FALSE
@@ -131,7 +173,7 @@ argstats <- function(arg.dat, pop1, pop2, pop1.name, pop2.name){
 
   }
 
-  if(is.monophyletic(tree, tips = pop2)){
+  if(ape::is.monophyletic(tree, tips = pop2)){
 
     pop2.fix <- tmrca - pop2_dist
     arg.stats.df[i,10] <- pop2.fix
@@ -144,7 +186,7 @@ argstats <- function(arg.dat, pop1, pop2, pop1.name, pop2.name){
 
     # Get a list of nodes and their descendants
 
-    all_nodes <- Descendants(tree, type = "tips")
+    all_nodes <- phangorn::Descendants(tree, type = "tips")
     tip_idx <- tree$tip.label
 
     test <- lapply(all_nodes, identify_clade, pop1 = pop1, pop2 = pop2, tip_idx = tip_idx)
@@ -154,7 +196,7 @@ argstats <- function(arg.dat, pop1, pop2, pop1.name, pop2.name){
     test.df$node <- paste(1:length(all_nodes))
 
     # Remove nodes with only 1 individual and filter for only nodes where there are no contiental individuals
-    pop2.df.filt <- test.df %>% filter(n.pop2 > 1, n.pop1 == 0)
+    pop2.df.filt <- test.df %>% dplyr::filter(n.pop2 > 1, n.pop1 == 0)
 
     if(nrow(pop2.df.filt) > 0){
 
@@ -164,12 +206,12 @@ argstats <- function(arg.dat, pop1, pop2, pop1.name, pop2.name){
 
         nodes <- pop2.df.filt[,1]
 
-        which(nodes %in% getDescendants(tree, node = pop2.df.filt$node[l],))
+        which(nodes %in% phytools::getDescendants(tree, node = pop2.df.filt$node[l],))
 
         prop.child[l,1] <- pop2.df.filt$node[l]
-        prop.child[l,2] <- length(which(nodes %in% getDescendants(tree, node = pop2.df.filt$node[l],)))
+        prop.child[l,2] <- length(which(nodes %in% phytools::getDescendants(tree, node = pop2.df.filt$node[l],)))
 
-        if(any(Ancestors(tree, pop2.df.filt$node[l], type = "all") %in% nodes)){
+        if(any(phangorn::Ancestors(tree, pop2.df.filt$node[l], type = "all") %in% nodes)){
 
           prop.child[l,3] <- TRUE
 
@@ -182,15 +224,15 @@ argstats <- function(arg.dat, pop1, pop2, pop1.name, pop2.name){
       }
 
       # Only select nodes where is.child == FALSE for calculations
-      prop.child.filt <- prop.child %>% filter(is.child == FALSE)
+      prop.child.filt <- prop.child %>% dplyr::filter(is.child == FALSE)
 
       # Calculate tmrca-within
       tmrca_w <- c()
       for(m in 1:nrow(prop.child.filt)){
 
-        tips <- getDescendants(tree, node = prop.child.filt$node[m])
+        tips <- phytools::getDescendants(tree, node = prop.child.filt$node[m])
 
-        con_dist <- findMRCA(tree, tips = tips, type = "height")
+        con_dist <- phytools::findMRCA(tree, tips = tips, type = "height")
         pop2.fix <- tmrca - con_dist
 
         tmrca_w <- c(tmrca_w, pop2.fix)
@@ -200,7 +242,7 @@ argstats <- function(arg.dat, pop1, pop2, pop1.name, pop2.name){
       }
 
       arg.stats.df[i,10] <- mean(tmrca_w)
-      arg.stats.df[i,11] <- median(tmrca_w)
+      arg.stats.df[i,11] <- stats::median(tmrca_w)
       arg.stats.df[i,12] <- min(tmrca_w)
       arg.stats.df[i,13] <- max(tmrca_w)
       arg.stats.df[i,14] <- FALSE

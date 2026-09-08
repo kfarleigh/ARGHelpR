@@ -2,10 +2,31 @@ Package: ARGHelpR
 Title: What the Package Does (One Line, Title Case)
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+    c(person("Keaka", "Farleigh", , "keakafarleigh@gmail.com", role = c("aut","cph", "cre"), comment = c(ORCID = "0000-0002-9195-121X")),
+    person("Dylan", "Highland", , "myu5wx@virginia.edu", role = c("aut","cph", "ctb"), comment = c(ORCID = "0009-0000-2757-9161")),
+    person("Megan", "Alderman", , "hbs5rf@virginia.edu", role = c("aut","cph", "ctb"), comment = c(ORCID = "0000-0003-2586-9151")),
+    person("Ellie", "Faber", , "vwf9gq@virginia.edu", role = c("aut","cph", "ctb"), comment = c(ORCID = "0009-0007-3863-5801")),
+    person("Drew", "Schield", , "drew.schield@virginia.edu", role = c("aut","cph", "ctb"), comment = c(ORCID = "0000-0001-7854-9480")))
+Description: Summarize and visualize ancestral recombination graphs. 'ARGHelpR' uses bed files output from ancestral recombination graph estimation programs to calculate various statistics that can be used to identify different forms of natural selection. 
+URL: https://kfarleigh.github.io/ARGHelpR/
+BugReports: https://github.com/kfarleigh/ARGHelpR/issues
+License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 8.1.0
+Config/roxygen2/version: 8.1.0
+Suggests: 
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Imports: 
+    ape,
+    dplyr,
+    magrittr,
+    phangorn,
+    phytools,
+    stats
+Depends: 
+    R (>= 4.6)
+LazyData: true
+VignetteBuilder: knitr
