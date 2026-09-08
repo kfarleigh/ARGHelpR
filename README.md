@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# ARGHelpR
+# ARGHelpR version 1.0.0 <img src="man/figures/AGH_logo_stickersize.png" align="right" width="145" height = "145"/>
 
 <!-- badges: start -->
 
