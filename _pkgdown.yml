@@ -2,7 +2,7 @@ title: ARGHelpR
 url: https://kfarleigh.github.io/ARGHelpR/
 template:
   bootstrap: 5
-  bootswatch: cosmo
+  bootswatch: simplex
 
 navbar:
   title: "ARGHelpR"
