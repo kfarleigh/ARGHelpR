@@ -20,6 +20,7 @@ navbar:
       menu:
         - text: Vignette
         - text: Formatting data
+        - text: Plotting ARGs
     github:
       icon: fa-github
       href: https://github.com/kfarleigh/ARGHelpR
@@ -28,4 +29,4 @@ navbar:
       left: developed_by
       right: Funding
     components:
-        Funding: ARGHelpR is funded by an NSF Postdoctoral Research Fellowhip in Biology to KF (DBI-2409958) and start-up funds from the University of Virginia to DS.
+        Funding: ARGHelpR is funded by an National Science Foundation Postdoctoral Research Fellowhip in Biology to KF (DBI-2409958) and start-up funds from the University of Virginia to DRS. Logo designed by DKH.
