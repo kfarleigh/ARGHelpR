@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# ARGHelpR version 1.0.0 <img src="man/figures/AGH_logo_stickersize.png" align="right" width="124" height = "144"/>
+# ARGHelpR version 1.0.0 <img src="man/figures/AGH_sticker.png" align="right" width="124" height = "144"/>
 
 <!-- badges: start -->
 
@@ -12,13 +12,17 @@ mirror](https://cranlogs.r-pkg.org/badges/ARGHelpR)](https://cran.r-project.org/
 [![R-CMD-check](https://github.com/kfarleigh/ARGHelpR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/kfarleigh/ARGHelpR/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
+**WARNING!** This website is currently in development. Links may or may
+not work, please email Keaka Farleigh (<keakafarleigh@gmail.com>) if you
+have any questions.
+
 ## What is *ARGHelpR*?
 
-*ARGHelpR* is an R package that summarizes and visualizes output from
-ancestral recombination graphs (ARGs). This allows researchers to
-identify specific regions of the genome that may be influenced by some
-form of selection and those that may be involved in specific processes
-such as introgression. Please see our
+*ARGHelpR* is an R package that summarizes and visualizes ancestral
+recombination graphs (ARGs). *ARGHelpR* allows researchers to identify
+specific regions of the genome that may be influenced by some form of
+selection and those that may be involved in specific processes such as
+introgression. Please see our
 [vignette](https://kfarleigh.github.io/placeholder) and
 [tutorials](https://kfarleigh.github.io/placeholder) using the articles
 dropdown tag to see how you can identify these regions in your own data

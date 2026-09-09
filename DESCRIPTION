@@ -1,5 +1,5 @@
 Package: ARGHelpR
-Title: Summarize and visualize ancestral recombination graphs to identify genomic regions that may be influenced by different forms of selection or involved in introgression.
+Title: Summarize and visualize ancestral recombination graphs to identify genomic regions that may be influenced by different forms of selection or involved in introgression
 Version: 1.0.0
 Authors@R: 
     c(person("Keaka", "Farleigh", , "keakafarleigh@gmail.com", role = c("aut","cph", "cre"), comment = c(ORCID = "0000-0002-9195-121X")),
