@@ -18,6 +18,8 @@ navbar:
     Articles:
       text: Articles
       menu:
+        - text: Vignette
+        - text: Formatting data
     github:
       icon: fa-github
       href: https://github.com/kfarleigh/ARGHelpR
