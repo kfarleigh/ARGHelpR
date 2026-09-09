@@ -13,12 +13,9 @@
 #' @examples
 #' \donttest{
 #' Test <- argstats(arg.dat = rattlesnake_args, pop1 = pop1_inds, pop2 = pop2_inds, pop1.name = "continental", pop2.name = "stephensi")}
-argstats <- function(arg.dat, pop1, pop2, pop1.name, pop2.name, n.cores = 1, n.haps = 2){
+argstats_helper <- function(arg.dat, pop1, pop2, pop1.name, pop2.name, n.haps = 2){
 
   is.child <- n.pop1 <- n.pop2 <- NULL
-
-  ### ToDo
-  # Add parallel option
 
   # Function to identify clades in the data.
   identify_clade <- function(dat, pop1, pop2, tip_idx){

@@ -1,9 +1,9 @@
 Package: ARGHelpR
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Title: Summarize and visualize ancestral recombination graphs to identify genomic regions that may be influenced by different forms of selection or involved in introgression.
+Version: 1.0.0
 Authors@R: 
     c(person("Keaka", "Farleigh", , "keakafarleigh@gmail.com", role = c("aut","cph", "cre"), comment = c(ORCID = "0000-0002-9195-121X")),
-    person("Dylan", "Highland", , "myu5wx@virginia.edu", role = c("aut","cph", "ctb"), comment = c(ORCID = "0009-0000-2757-9161")),
+    person("Dylan", "Highland", , "dylan.highland@virginia.edu", role = c("aut","cph", "ctb"), comment = c(ORCID = "0009-0000-2757-9161")),
     person("Megan", "Alderman", , "hbs5rf@virginia.edu", role = c("aut","cph", "ctb"), comment = c(ORCID = "0000-0003-2586-9151")),
     person("Ellie", "Faber", , "vwf9gq@virginia.edu", role = c("aut","cph", "ctb"), comment = c(ORCID = "0009-0007-3863-5801")),
     person("Drew", "Schield", , "drew.schield@virginia.edu", role = c("aut","cph", "ctb"), comment = c(ORCID = "0000-0001-7854-9480")))
@@ -23,6 +23,7 @@ Imports:
     ape,
     dplyr,
     magrittr,
+    parallel,
     phangorn,
     phytools,
     stats
@@ -30,4 +31,3 @@ Depends:
     R (>= 4.6)
 LazyData: true
 VignetteBuilder: knitr
-RoxygenNote: 7.3.3

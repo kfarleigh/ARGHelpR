@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# ARGHelpR version 1.0.0 <img src="man/figures/AGH_logo_stickersize.png" align="right" width="145" height = "145"/>
+# ARGHelpR version 1.0.0 <img src="man/figures/AGH_logo_stickersize.png" align="right" width="124" height = "144"/>
 
 <!-- badges: start -->
 
@@ -12,7 +12,22 @@ mirror](https://cranlogs.r-pkg.org/badges/ARGHelpR)](https://cran.r-project.org/
 [![R-CMD-check](https://github.com/kfarleigh/ARGHelpR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/kfarleigh/ARGHelpR/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-The goal of ARGHelpR is to …
+## What is *ARGHelpR*?
+
+*ARGHelpR* is an R package that summarizes and visualizes output from
+ancestral recombination graphs (ARGs). This allows researchers to
+identify specific regions of the genome that may be influenced by some
+form of selection and those that may be involved in specific processes
+such as introgression. Please see our
+[vignette](https://kfarleigh.github.io/placeholder) and
+[tutorials](https://kfarleigh.github.io/placeholder) using the articles
+dropdown tag to see how you can identify these regions in your own data
+and how you can convert your output from different ARG programs into the
+format needed to use *ARGHelpR*.
+
+We plan to continue developing the package to include more functions,
+feel free to reach out to Keaka Farleigh if you have any suggestions or
+would like to collaborate.
 
 ## Installation
 
@@ -24,35 +39,4 @@ You can install the development version of ARGHelpR from
 pak::pak("kfarleigh/ARGHelpR")
 ```
 
-## Example
-
-This is a basic example which shows you how to solve a common problem:
-
-``` r
-library(ARGHelpR)
-## basic example code
-```
-
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
-
-``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
-```
-
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this.
-
-You can also embed plots, for example:
-
-<img src="man/figures/README-pressure-1.png" alt="" width="100%" />
-
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.
+## Citing *ARGHelpR*
