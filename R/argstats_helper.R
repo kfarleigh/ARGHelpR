@@ -5,17 +5,20 @@
 #' @param pop2 a vector of individuals in the other population.
 #' @param pop1.name a character string that tells us the name of population 1.
 #' @param pop2.name a character string that tells us the name of population 2.
+#' @param n.haps a numeric value indicating the minimum number of haplotypes to identify a clade.
 #'
 #' @returns A data frame containing the calculated statistics, the relevant window, and relevant arg. The statistics include the time to the most recent common ancestor between populations/species (tmrca) and estimates of the time to most recent common ancestor within populations/species (tmrcaw). The output also indicates if populations/species are monophyletic and which population/species corresponds to which population.
 #' @author Keaka Farleigh
-#' @export
 #'
 #' @examples
 #' \donttest{
 #' Test <- argstats(arg.dat = rattlesnake_args, pop1 = pop1_inds, pop2 = pop2_inds, pop1.name = "continental", pop2.name = "stephensi")}
-argstats <- function(arg.dat, pop1, pop2, pop1.name, pop2.name){
+argstats <- function(arg.dat, pop1, pop2, pop1.name, pop2.name, n.cores = 1, n.haps = 2){
 
   is.child <- n.pop1 <- n.pop2 <- NULL
+
+  ### ToDo
+  # Add parallel option
 
   # Function to identify clades in the data.
   identify_clade <- function(dat, pop1, pop2, tip_idx){
@@ -108,7 +111,7 @@ argstats <- function(arg.dat, pop1, pop2, pop1.name, pop2.name){
     test.df$node <- paste(1:length(all_nodes))
 
     # Remove nodes with only 1 individual and filter for only nodes where there are no contiental individuals
-    pop1.df.filt <- test.df %>% dplyr::filter(n.pop1 > 1, n.pop2 == 0)
+    pop1.df.filt <- test.df %>% dplyr::filter(n.pop1 > (n.haps-1), n.pop2 == 0)
 
     if(nrow(pop1.df.filt) > 0){
 
@@ -196,7 +199,7 @@ argstats <- function(arg.dat, pop1, pop2, pop1.name, pop2.name){
     test.df$node <- paste(1:length(all_nodes))
 
     # Remove nodes with only 1 individual and filter for only nodes where there are no contiental individuals
-    pop2.df.filt <- test.df %>% dplyr::filter(n.pop2 > 1, n.pop1 == 0)
+    pop2.df.filt <- test.df %>% dplyr::filter(n.pop2 > (n.haps-1), n.pop1 == 0)
 
     if(nrow(pop2.df.filt) > 0){
 
