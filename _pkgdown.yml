@@ -1,0 +1,29 @@
+title: ARGHelpR
+url: https://kfarleigh.github.io/ARGHelpR/
+template:
+  bootstrap: 5
+  bootswatch: cosmo
+
+navbar:
+  title: "ARGHelpR"
+  bg: primary
+  type: light
+  structure:
+    left: [Manual, Articles]
+    right: [github]
+  components:
+    Manual:
+        text: Manual
+        href: reference/index.html
+    Articles:
+      text: Articles
+      menu:
+    github:
+      icon: fa-github
+      href: https://github.com/kfarleigh/ARGHelpR
+  footer:
+    structure:
+      left: developed_by
+      right: Funding
+    components:
+        Funding: ARGHelpR is funded by an NSF Postdoctoral Research Fellowhip in Biology to KF (DBI-2409958) and start-up funds from the University of Virginia to DS.
