@@ -1,6 +1,7 @@
-# Calculate ancestral recombination graph statistics
+# An internal helper function to calculate ARG statistics. This is used by argstats.
 
-Calculate ancestral recombination graph statistics
+An internal helper function to calculate ARG statistics. This is used by
+argstats.
 
 ## Usage
 

@@ -1,6 +1,6 @@
-# Visualize ancestral recombination graphs
+# Visualize ancestral recombination graphs.
 
-Visualize ancestral recombination graphs
+Visualize ancestral recombination graphs.
 
 ## Usage
 

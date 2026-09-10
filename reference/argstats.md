@@ -1,6 +1,6 @@
-# Calculate ancestral recombination graph summary statistics
+# Calculate ancestral recombination graph summary statistics.
 
-Calculate ancestral recombination graph summary statistics
+Calculate ancestral recombination graph summary statistics.
 
 ## Usage
 
