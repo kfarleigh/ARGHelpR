@@ -2,7 +2,7 @@
 % Please edit documentation in R/argstats_helper.R
 \name{argstats_helper}
 \alias{argstats_helper}
-\title{Calculate ancestral recombination graph statistics}
+\title{An internal helper function to calculate ARG statistics. This is used by argstats.}
 \usage{
 argstats_helper(arg.dat, pop1, pop2, pop1.name, pop2.name, n.haps = 2)
 }
@@ -23,7 +23,7 @@ argstats_helper(arg.dat, pop1, pop2, pop1.name, pop2.name, n.haps = 2)
 A data frame containing the calculated statistics, the relevant window, and relevant arg. The statistics include the time to the most recent common ancestor between populations/species (tmrca) and estimates of the time to most recent common ancestor within populations/species (tmrcaw). The output also indicates if populations/species are monophyletic and which population/species corresponds to which population.
 }
 \description{
-Calculate ancestral recombination graph statistics
+An internal helper function to calculate ARG statistics. This is used by argstats.
 }
 \examples{
 \donttest{

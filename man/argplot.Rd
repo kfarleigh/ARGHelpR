@@ -2,7 +2,7 @@
 % Please edit documentation in R/argplot.R
 \name{argplot}
 \alias{argplot}
-\title{Visualize ancestral recombination graphs}
+\title{Visualize ancestral recombination graphs.}
 \usage{
 argplot(
   arg,
@@ -30,7 +30,7 @@ argplot(
 a phylogeny with tips colored according to population.
 }
 \description{
-Visualize ancestral recombination graphs
+Visualize ancestral recombination graphs.
 }
 \examples{
 \donttest{

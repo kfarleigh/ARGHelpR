@@ -1,4 +1,4 @@
-#' Calculate ancestral recombination graph statistics
+#' An internal helper function to calculate ARG statistics. This is used by argstats.
 #'
 #' @param arg.dat a list element that contains a dataframe. The data frame columns should be chromosome, start, end, and the phylogeney estimated in ARG analysis.
 #' @param pop1 a vector of individuals in one population.

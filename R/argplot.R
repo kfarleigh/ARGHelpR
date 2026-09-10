@@ -1,4 +1,4 @@
-#' Visualize ancestral recombination graphs
+#' Visualize ancestral recombination graphs.
 #'
 #' @param arg a newick string of ancestral recombination graph to be visualized.
 #' @param pop1 a vector of individuals in population one.

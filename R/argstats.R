@@ -1,4 +1,4 @@
-#' Calculate ancestral recombination graph summary statistics
+#' Calculate ancestral recombination graph summary statistics.
 #'
 #' @param arg.dat a list where each element is an ancestral recombiation graph represented by a data frame. The data frame columns should be chromosome, start, end, and the phylogeney estimated in ARG analysis.
 #' @param pop1 a vector of individuals in one population.
