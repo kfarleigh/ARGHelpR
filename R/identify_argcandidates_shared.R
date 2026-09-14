@@ -56,7 +56,7 @@ identify_argcandidates_shared <- function(dat, analysis = "all", background = NU
       RI_args <- NULL
     }
     if("INT" %in% analysis | analysis == "all"){
-      INT_args <- dat %>% filter(tmrca < tmrca.iqr.low & (pop1.meantmrcaw >= pop1.tmrcaw.thresh & pop2.meantmrcaw >= pop2.tmrcaw.thresh))
+      INT_args <- dat %>% dplyr::filter(tmrca < tmrca.iqr.low & (pop1.meantmrcaw >= pop1.tmrcaw.thresh & pop2.meantmrcaw >= pop2.tmrcaw.thresh))
     } else{
       INT_args <- NULL
     }
@@ -104,7 +104,7 @@ identify_argcandidates_shared <- function(dat, analysis = "all", background = NU
       BS_args <- NULL
     }
     if("INT" %in% analysis | analysis == "all"){
-      INT_args <- background %>% filter(tmrca < tmrca.iqr.low & (pop1.meantmrcaw >= pop1.tmrcaw.thresh & pop2.meantmrcaw >= pop2.tmrcaw.thresh))
+      INT_args <- background %>% dplyr::filter(tmrca < tmrca.iqr.low & (pop1.meantmrcaw >= pop1.tmrcaw.thresh & pop2.meantmrcaw >= pop2.tmrcaw.thresh))
     } else{
       INT_args <- NULL
     }

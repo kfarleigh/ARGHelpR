@@ -19,6 +19,9 @@ navbar:
       text: Articles
       menu:
         - text: Vignette
+          href: articles/arghelpr-vignette.html
+        - text: Understanding ARG stats
+          href: articles/ARGHelpR_statistics.html
         - text: Formatting data
         - text: Plotting ARGs
     github:
