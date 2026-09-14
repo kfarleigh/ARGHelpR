@@ -42,9 +42,6 @@ pak::pak("kfarleigh/ARGHelpR")
   : Visualize ancestral recombination graphs.
 - [`argstats()`](https://kfarleigh.github.io/ARGHelpR/reference/argstats.md)
   : Calculate ancestral recombination graph summary statistics.
-- [`argstats_helper()`](https://kfarleigh.github.io/ARGHelpR/reference/argstats_helper.md)
-  : An internal helper function to calculate ARG statistics. This is
-  used by argstats.
 - [`identify_argcandidates_divergence()`](https://kfarleigh.github.io/ARGHelpR/reference/identify_argcandidates_divergence.md)
   : Identify ancestral recombination graphs under selection that
   correspond to models of divergence.
@@ -53,3 +50,10 @@ pak::pak("kfarleigh/ARGHelpR")
   correspond to models of shared variation (introgression and balancing
   selection).
 
+# Articles
+
+### All vignettes
+
+- [Understanding ARG
+  statistics](https://kfarleigh.github.io/ARGHelpR/articles/ARGHelpR_statistics.md):
+- [arghelpr-vignette](https://kfarleigh.github.io/ARGHelpR/articles/arghelpr-vignette.md):

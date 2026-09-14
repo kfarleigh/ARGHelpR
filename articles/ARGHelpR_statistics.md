@@ -1,0 +1,69 @@
+# Understanding ARG statistics
+
+Written by: Keaka Farleigh, Ph.D. Date: September, 14th, 2026 Date last
+modified: September, 14th, 2026
+
+## Purpose
+
+To help you understand the different statistics calculated in `ARGHelpR`
+and determine which measure is appropriate for your question/objective.
+
+## Background
+
+Ancestral recombination graphs (ARGs) can support robust inferences of
+many processes including natural selection and introgression (see [this
+article](https://kfarleigh.github.io/dog) for a background on ARGs).
+Inferring which processes may influence a particular genomic region or
+if they significantly influence a region (see [this
+article](https://kfarleigh.github.io/dog) for visualizations of
+different scenarios) at all requires that we use various statistics that
+evaluate the coalescence between and within populations or species (see
+figure below). In this article, we will explain each statistic, how to
+calculate it, and why it may be relevant for your study.
+
+![](Statexamples.png)
+
+### Time to most recent common ancestor between (TMRCA_(B))
+
+The time to the most recent common ancestor between is the time (usually
+in generations) that it takes for coalescence to occur between two
+populations/species. This is used when trying to identify any genomic
+region with deeper coalescence than the genomic background (reproductive
+isolation, balancing selection) or when trying to identify signatures of
+within-population selection, recurrent selection, and introgression.
+
+### Time to most recent common ancestor within (TMRCA_(W))
+
+The time to the most recent common ancestor within is the time (usually
+in generations) that it takes for coalescence to occur within two
+populations/species. This is traditionally used to identify
+within-population selection, recurrent selection, and introgression. It
+can also be used to identify balancing selection and genomic regions
+involved in reproductive isolation and within-population selection.
+
+`ARGHelpR` provides a modified calculation of this statistic, which is
+useful when there is incomplete lineage sorting, balancing selection, or
+introgression. These processes influence the ARG topology, biasing the
+traditional calculations. We address this by estimating the TMRCAW for
+seperate monophyletic clades of population haplotypes and averaging
+these values.
+
+For example, if a population is split into two monophyletic groups (like
+in the figure above).
+
+``` math
+TMRCA_{W}= \frac{TMRCA_{W1} + TMRCA_{W2}}{2}
+```
+
+### Time to the most recent common ancestor 50 (TMRCA₅₀) and relative half life (RTH)
+
+The time to the most recent common ancestor 50 is the time (usually in
+generations) that it takes for coalescence to occur for 50% of the
+haplotypes in an ARG. This is traditionally used to calculate the TMRCA
+relative half life (RTH), which provides a way to account for
+coalescence variation across the genome. The RTH is calculated by
+dividing the TMRCA50 by the TMRCA.
+
+``` math
+RTH = \frac{TMRCA_{50}}{TMRCA}
+```
