@@ -48,8 +48,7 @@ traditional calculations. We address this by estimating the TMRCAW for
 seperate monophyletic clades of population haplotypes and averaging
 these values.
 
-For example, if a population is split into two monophyletic groups (like
-in the figure above).
+For example, if a population is split in two (like in the figure above).
 
 ``` math
 TMRCA_{W}= \frac{TMRCA_{W1} + TMRCA_{W2}}{2}
