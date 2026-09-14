@@ -42,7 +42,7 @@ The time to the most recent common ancestor within is the time (usually in gener
 
 `ARGHelpR` provides a modified calculation of this statistic, which is useful when there is incomplete lineage sorting, balancing selection, or introgression. These processes influence the ARG topology, biasing the traditional calculations. We address this by estimating the TMRCAW for seperate monophyletic clades of population haplotypes and averaging these values.
 
-For example, if a population is split into two monophyletic groups (like in the figure above).
+For example, if a population is split in two (like in the figure above).
 
 $$
 TMRCA_{W}= \frac{TMRCA_{W1} + TMRCA_{W2}}{2}
