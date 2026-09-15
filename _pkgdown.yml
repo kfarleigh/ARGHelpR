@@ -20,6 +20,8 @@ navbar:
       menu:
         - text: Vignette
           href: articles/arghelpr-vignette.html
+        - text: What's an ARG?
+          href: articles/ARGHelpR_arg_background.html
         - text: Understanding ARG stats
           href: articles/ARGHelpR_statistics.html
         - text: Formatting data
