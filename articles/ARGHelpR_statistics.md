@@ -22,7 +22,20 @@ evaluate the coalescence between and within populations or species (see
 figure below). In this article, we will explain each statistic, how to
 calculate it, and why it may be relevant for your study.
 
-![](Statexamples.png)
+![Figure 1. Cartoons of the ancestral recombination graph statistics
+that ARGHelpR can calculate. Colored tips represent individual
+haplotypes corresponding to different populations, colored nodes
+represent different statistics calculated by ARGHelpR. In some cases
+(center and right cartoons), ARGHelpR uses these statistics to calculate
+other statistics, which are represented by the formula in each
+cartoon.](Statexamples.png)
+
+Figure 1. Cartoons of the ancestral recombination graph statistics that
+ARGHelpR can calculate. Colored tips represent individual haplotypes
+corresponding to different populations, colored nodes represent
+different statistics calculated by ARGHelpR. In some cases (center and
+right cartoons), ARGHelpR uses these statistics to calculate other
+statistics, which are represented by the formula in each cartoon.
 
 ### Time to most recent common ancestor between (TMRCA_(B))
 
