@@ -27,10 +27,9 @@ To help you understand the different statistics calculated in `ARGHelpR` and det
 
 Ancestral recombination graphs (ARGs) can support robust inferences of many processes including natural selection and introgression (see [this article](https://kfarleigh.github.io/dog) for a background on ARGs). Inferring which processes may influence a particular genomic region or if they significantly influence a region (see [this article](https://kfarleigh.github.io/dog) for visualizations of different scenarios) at all requires that we use various statistics that evaluate the coalescence between and within populations or species (see figure below). In this article, we will explain each statistic, how to calculate it, and why it may be relevant for your study. 
 
-```{r, out.width= "700px", out.height= "175px", echo=FALSE, eval=TRUE, fig.align='center'}
+```{r, out.width= "700px", out.height= "175px", echo=FALSE, eval=TRUE, fig.align='left', fig.cap="Figure 1. Cartoons of the ancestral recombination graph statistics that ARGHelpR can calculate. Colored tips represent individual haplotypes corresponding to different populations, colored nodes represent different statistics calculated by ARGHelpR. In some cases (center and right cartoons), ARGHelpR uses these statistics to calculate other statistics, which are represented by the formula in each cartoon."}
 knitr::include_graphics("Statexamples.png")
 ```
-
 
 ### Time to most recent common ancestor between (TMRCA~B~)
 
