@@ -64,8 +64,9 @@
 
     
     
-<p>Written by: Keaka Farleigh, Ph.D. Date: September, 14th, 2026 Date
-last modified: September, 14th, 2026</p>
+<p>Written by: Keaka Farleigh, Ph.D.<br>
+Date: September, 14th, 2026.<br>
+Date last modified: September, 15th, 2026</p>
 <div class="section level2">
 <h2 id="purpose">Purpose<a class="anchor" aria-label="anchor" href="#purpose"></a>
 </h2>
@@ -112,11 +113,21 @@ balancing selection, or introgression. These processes influence the ARG
 topology, biasing the traditional calculations. We address this by
 estimating the TMRCAW for seperate monophyletic clades of population
 haplotypes and averaging these values.</p>
-<p>For example, if a population is split in two (like in the figure
-above).</p>
+<p>For example, if a population is paraphyletic and split into two
+groups (like in the figure above).</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mi>M</mi><mi>R</mi><mi>C</mi><msub><mi>A</mi><mi>W</mi></msub><mo>=</mo><mfrac><mrow><mi>T</mi><mi>M</mi><mi>R</mi><mi>C</mi><msub><mi>A</mi><mrow><mi>W</mi><mn>1</mn></mrow></msub><mo>+</mo><mi>T</mi><mi>M</mi><mi>R</mi><mi>C</mi><msub><mi>A</mi><mrow><mi>W</mi><mn>2</mn></mrow></msub></mrow><mn>2</mn></mfrac></mrow><annotation encoding="application/x-tex">
 TMRCA_{W}= \frac{TMRCA_{W1} + TMRCA_{W2}}{2}
-</annotation></semantics></math></p>
+</annotation></semantics></math> This can then be generalized for as
+many groups as exist in the dataset. If there are K groups, the formula
+becomes:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mi>M</mi><mi>R</mi><mi>C</mi><msub><mi>A</mi><mi>W</mi></msub><mo>=</mo><mfrac><mrow><mi>T</mi><mi>M</mi><mi>R</mi><mi>C</mi><msub><mi>A</mi><mrow><mi>W</mi><mn>1</mn></mrow></msub><mo>+</mo><mi>T</mi><mi>M</mi><mi>R</mi><mi>C</mi><msub><mi>A</mi><mrow><mi>W</mi><mn>2</mn></mrow></msub><mo>+</mo><mi>T</mi><mi>M</mi><mi>R</mi><mi>C</mi><msub><mi>A</mi><mrow><mi>W</mi><mn>3</mn></mrow></msub><mo>+</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>+</mo><mi>T</mi><mi>M</mi><mi>R</mi><mi>C</mi><msub><mi>A</mi><mrow><mi>W</mi><mi>K</mi></mrow></msub></mrow><mi>K</mi></mfrac></mrow><annotation encoding="application/x-tex">
+TMRCA_{W} =  \frac{TMRCA_{W1} + TMRCA_{W2} + TMRCA_{W3} + ... + TMRCA_{WK}}{K}
+</annotation></semantics></math> Users can control the number of groups
+by setting the <code>n.haps</code> argument, which sets the number of
+haplotypes that must be present in a monophyletic clade for the
+TMRCA<sub>W</sub> to be calculated. <code>ARGHelpR</code> also reports
+the minimum, median, and maximum TMRCA<sub>W</sub> in case users feel
+like those values are more appropriate for their study.</p>
 </div>
 <div class="section level3">
 <h3 id="time-to-the-most-recent-common-ancestor-50-tmrca50-and-relative-half-life-rth">Time to the most recent common ancestor 50 (TMRCA<sub>50</sub>) and
@@ -126,12 +137,26 @@ relative half life (RTH)<a class="anchor" aria-label="anchor" href="#time-to-the
 in generations) that it takes for coalescence to occur for 50% of the
 haplotypes in an ARG. This is traditionally used to calculate the TMRCA
 relative half life (RTH), which provides a way to account for
-coalescence variation across the genome. The RTH is calculated by
-dividing the TMRCA50 by the TMRCA.</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi><mi>T</mi><mi>H</mi><mo>=</mo><mfrac><mrow><mi>T</mi><mi>M</mi><mi>R</mi><mi>C</mi><msub><mi>A</mi><mn>50</mn></msub></mrow><mrow><mi>T</mi><mi>M</mi><mi>R</mi><mi>C</mi><mi>A</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">
-RTH = \frac{TMRCA_{50}}{TMRCA}
+coalescence variation across the genome (<a href="https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1004342" class="external-link">Rasmussen
+et al., 2014</a>). The RTH is calculated by dividing the
+TMRCA<sub>50</sub> by the TMRCA<sub>B</sub>. Lower values of RTH
+indicate more recent coalescence, which may be indicative of a recent
+selective sweep. Higher values indicated a longer time to coalescence,
+which may be indicative of balancing selection or reproductive
+isolation. See <a href="https://kfarleigh.github.io/ARGHelpR/reference/identify_argcandidates_divergence.html"><code>identify_argcandidates_divergence</code></a>
+and <a href="https://kfarleigh.github.io/ARGHelpR/reference/identify_argcandidates_shared.html"><code>identify_argcandidates_shared</code></a>
+for additional tests for selection.</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi><mi>T</mi><mi>H</mi><mo>=</mo><mfrac><mrow><mi>T</mi><mi>M</mi><mi>R</mi><mi>C</mi><msub><mi>A</mi><mn>50</mn></msub></mrow><mrow><mi>T</mi><mi>M</mi><mi>R</mi><mi>C</mi><msub><mi>A</mi><mi>B</mi></msub></mrow></mfrac></mrow><annotation encoding="application/x-tex">
+RTH = \frac{TMRCA_{50}}{TMRCA_{B}}
 </annotation></semantics></math></p>
 </div>
+</div>
+<div class="section level2">
+<h2 id="literature-cited">Literature Cited<a class="anchor" aria-label="anchor" href="#literature-cited"></a>
+</h2>
+<p>Rasmussen, M. D., Hubisz, M. J., Gronau, I., &amp; Siepel, A. (2014).
+Genome-wide inference of ancestral recombination graphs. <em>PLoS
+genetics</em>, <em>10</em>(5), e1004342.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

@@ -1,7 +1,8 @@
 # Understanding ARG statistics
 
-Written by: Keaka Farleigh, Ph.D. Date: September, 14th, 2026 Date last
-modified: September, 14th, 2026
+Written by: Keaka Farleigh, Ph.D.  
+Date: September, 14th, 2026.  
+Date last modified: September, 15th, 2026
 
 ## Purpose
 
@@ -48,11 +49,23 @@ traditional calculations. We address this by estimating the TMRCAW for
 seperate monophyletic clades of population haplotypes and averaging
 these values.
 
-For example, if a population is split in two (like in the figure above).
+For example, if a population is paraphyletic and split into two groups
+(like in the figure above).
 
 ``` math
 TMRCA_{W}= \frac{TMRCA_{W1} + TMRCA_{W2}}{2}
 ```
+This can then be generalized for as many groups as exist in the dataset.
+If there are K groups, the formula becomes:
+
+``` math
+TMRCA_{W} =  \frac{TMRCA_{W1} + TMRCA_{W2} + TMRCA_{W3} + ... + TMRCA_{WK}}{K}
+```
+Users can control the number of groups by setting the `n.haps` argument,
+which sets the number of haplotypes that must be present in a
+monophyletic clade for the TMRCA_(W) to be calculated. `ARGHelpR` also
+reports the minimum, median, and maximum TMRCA_(W) in case users feel
+like those values are more appropriate for their study.
 
 ### Time to the most recent common ancestor 50 (TMRCA₅₀) and relative half life (RTH)
 
@@ -60,9 +73,24 @@ The time to the most recent common ancestor 50 is the time (usually in
 generations) that it takes for coalescence to occur for 50% of the
 haplotypes in an ARG. This is traditionally used to calculate the TMRCA
 relative half life (RTH), which provides a way to account for
-coalescence variation across the genome. The RTH is calculated by
-dividing the TMRCA50 by the TMRCA.
+coalescence variation across the genome ([Rasmussen et al.,
+2014](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1004342)).
+The RTH is calculated by dividing the TMRCA₅₀ by the TMRCA_(B). Lower
+values of RTH indicate more recent coalescence, which may be indicative
+of a recent selective sweep. Higher values indicated a longer time to
+coalescence, which may be indicative of balancing selection or
+reproductive isolation. See
+[`identify_argcandidates_divergence`](https://kfarleigh.github.io/ARGHelpR/reference/identify_argcandidates_divergence.html)
+and
+[`identify_argcandidates_shared`](https://kfarleigh.github.io/ARGHelpR/reference/identify_argcandidates_shared.html)
+for additional tests for selection.
 
 ``` math
-RTH = \frac{TMRCA_{50}}{TMRCA}
+RTH = \frac{TMRCA_{50}}{TMRCA_{B}}
 ```
+
+## Literature Cited
+
+Rasmussen, M. D., Hubisz, M. J., Gronau, I., & Siepel, A. (2014).
+Genome-wide inference of ancestral recombination graphs. *PLoS
+genetics*, *10*(5), e1004342.
