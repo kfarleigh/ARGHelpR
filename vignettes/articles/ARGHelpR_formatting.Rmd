@@ -27,11 +27,11 @@ To help you understand the input format for ARGHelpR and how to convert the outp
 
 ARGHelpR uses bed files for analysis. There are four columns that are tab-delimited. The first column contains the chromosome, the second contains the start position, the third contains the end position, and the fourth column contains the ARG for that region.
 
-The is natively output by [ARGWeaver](), using the `smc2bed` function, but we have to convert output from other programs to bed format. We provide a couple scripts below to help. 
+The is natively output by [ARGWeaver](), using the `smc2bed` function, but we have to convert output from other programs to bed format. We provide a couple scripts below to help. **Note that these are python scripts.** 
 
 ## Converting output from ARGNeedle
 
-```{python, eval=FALSE}
+```{r, eval=FALSE}
 import arg_needle_lib
 import tskit
 
@@ -65,7 +65,7 @@ Then you can combine all of the ARGs for each chromosome for use in ARGHelpR.
 
 ## Converting output from tskit
 
-```{python, eval=FALSE}
+```{r, eval=FALSE}
 import tskit
 
 def ts_to_bed(tree_sequence_path, chromosome, output_bed):
