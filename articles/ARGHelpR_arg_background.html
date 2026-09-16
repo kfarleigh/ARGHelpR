@@ -66,6 +66,7 @@
     
     
 <p>Written by: Dylan Highland<br>
+Edited by: Keaka Farleigh, Ph.D.<br>
 Date: September, 15th, 2026.<br>
 Date last modified: September, 15th, 2026</p>
 <div class="section level2">
@@ -77,34 +78,36 @@ and what it is used for.</p>
 <div class="section level2">
 <h2 id="what-is-an-ancestral-recombination-graph">What is an ancestral recombination graph?<a class="anchor" aria-label="anchor" href="#what-is-an-ancestral-recombination-graph"></a>
 </h2>
-<p>An ancestral recombination graph (ARG) is a powerful phylogenetic
+<p>An ancestral recombination graph (ARG) is a powerful genealogical
 framework that is used in population genomics studies to represent the
-complete evolutionary and genealogical history of a given set of genomic
-data (<a href="https://academic.oup.com/gbe/article/16/2/evae005/7577593" class="external-link">Brandt
+evolutionary and genealogical history of a given set of genomic data (<a href="https://academic.oup.com/gbe/article/16/2/evae005/7577593" class="external-link">Brandt
 et al. 2024</a>). While traditional phylogenetic approaches consider the
 genome a single entity when inferring relationships between groups, ARGs
 account for genetic recombination, and in doing so, recognize that
 segments of the genome are products of distinct evolutionary histories.
-An ARG captures this complexity by identifying the most recent common
-ancestor between lineages (TMRCA<sub>B</sub>), as well as the internal
-nodes of convergence within a lineage (TMRCA<sub>W</sub>).</p>
-<p>The primary use of ARGs in population genetics is to describe the
-genealogy of specific genomic regions across evolutionary time more
-robustly than summary statistics or individual gene trees.
-Reconstructing an ARG using genomic data allows researchers to trace the
-origin of mutations and genetic variants, detect patterns of natural
-selection on specific regions of the genome, or even identify
-introgression events between species (<a href="https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1011110" class="external-link">Lewanski
-et al. 2024</a>).</p>
-<p>ARGs provide a strong framework for population genetics research by
-incorporating recombination into its inference, preserving the complex
-evolutionary trajectories of genomic data, and improving our
-understanding of lineage diversification over that of simpler
-phylogenetic trees and summary statistics. An ARG’s increased resolution
-based on genealogical reconstruction allows researchers to tease apart
-complex and occasionally overlapping evolutionary forces such as
-selection and gene flow, a boon for those interested in describing the
-complex evolution of traits over time.</p>
+Thus, an ARG can represent the complex evolutionary histories of data
+and improve our understanding of lineage diversification relative to
+simpler phylogenetic or summary statistic approaches. Moreover, this
+information can be used to disentangle intricate and occasionally
+overlapping evolutionary forces such as selection and gene flow. An ARG
+captures this complexity by representing the relationships among sampled
+haplotypes across the genome as a series of local genealogies connected
+by recombination events. These genealogies describe how haplotypes
+coalesce through time and we can use them to calculate the time to the
+most recent common ancestor between lineages (TMRCA<sub>B</sub>), as
+well as the time to the most recent common ancestor within a lineage
+(TMRCA<sub>W</sub>), respectively.</p>
+<p>ARGs have a variety of applications in population genetics, including
+characterizing the genealogical history of specific genomic regions
+across evolutionary time. Reconstructing ARGs allows researchers to
+investigate patterns of ancestry and genetic variation across the
+genome, including the distribution of mutations and genetic variants,
+signatures of natural selection, and patterns of introgression between
+populations or species (<a href="https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1011110" class="external-link">Lewanski
+et al. 2024</a>). By retaining information about local genealogies and
+their relationships across the genome, ARGs can provide insights into
+evolutionary processes that may be difficult to distinguish using
+individual gene trees or summary statistics alone.</p>
 </div>
 <div class="section level2">
 <h2 id="using-args-to-identify-signatures-of-natural-selection-and-introgression">Using ARGs to identify signatures of natural selection and
