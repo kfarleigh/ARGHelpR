@@ -48,7 +48,7 @@ over time, we can use ARGs to estimate coalescence times of sampled
 haplotypes, and further, the mode of selection that operates there. For
 example, under positive selection a given allele is swept to fixation
 (assuming a complete sweep) within a population; therefore, we would
-expect to see a more recent coalescence times than predicted under
+expect to see more recent coalescence times than predicted under
 neutrality ([Hejase et
 al. 2020](https://www.pnas.org/doi/abs/10.1073/pnas.2015987117)).
 Conversely, an allele that is maintained by balancing selection at
