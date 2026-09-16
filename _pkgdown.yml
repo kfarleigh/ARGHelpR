@@ -24,8 +24,12 @@ navbar:
           href: articles/ARGHelpR_arg_background.html
         - text: Understanding ARG stats
           href: articles/ARGHelpR_statistics.html
+        - text: Identifying selection and introgression
+          href: articles/ARGHelpR_identifyfuncs.html
         - text: Formatting data
+          href: articles/ARGHelpR_formatting.html
         - text: Plotting ARGs
+          href: articles/ARGHelpR_plotting.html
     github:
       icon: fa-github
       href: https://github.com/kfarleigh/ARGHelpR
