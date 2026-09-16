@@ -31,7 +31,7 @@ The is natively output by [ARGWeaver](), using the `smc2bed` function, but we ha
 
 ## Converting output from ARGNeedle
 
-```{python}
+```{python, eval=FALSE}
 import arg_needle_lib
 import tskit
 
@@ -65,7 +65,7 @@ Then you can combine all of the ARGs for each chromosome for use in ARGHelpR.
 
 ## Converting output from tskit
 
-```{python}
+```{python, eval=FALSE}
 import tskit
 
 def ts_to_bed(tree_sequence_path, chromosome, output_bed):
