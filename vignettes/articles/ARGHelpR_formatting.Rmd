@@ -1,0 +1,100 @@
+---
+title: "Formatting data for ARGHelpR"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{ARGHelpR_formatting}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+  options(rmarkdown.html_vignette.check_title = FALSE)
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Written by: Keaka Farleigh, Ph.D.  
+Date: September, 16th, 2026.  
+Date last modified: September, 16th, 2026
+
+## Purpose
+
+To help you understand the input format for ARGHelpR and how to convert the output from ancestral recombination graph (ARG) estimation programs into this format.
+
+## Format expected by ARGHelpR
+
+ARGHelpR uses bed files for analysis. There are four columns that are tab-delimited. The first column contains the chromosome, the second contains the start position, the third contains the end position, and the fourth column contains the ARG for that region.
+
+The is natively output by [ARGWeaver](), using the `smc2bed` function, but we have to convert output from other programs to bed format. We provide a couple scripts below to help. 
+
+## Converting output from ARGNeedle
+
+```{python}
+import arg_needle_lib
+import tskit
+
+def export_arg_to_tree_bed(argn_path, chromosome, output_bed):
+    # 1. Load the inferred ARG from the .argn file
+    arg_obj = arg_needle_lib.load_arg(argn_path)
+    
+    # 2. Convert the ARG object to a tskit TreeSequence object
+    # This automatically splits the genome into non-recombining interval segments
+    ts = arg_needle_lib.arg_to_tskit(arg_obj)
+    
+    # 3. Open the output file and write intervals in bed format
+    with open(output_bed, 'w') as bed_file:
+        # Iterate through each local tree segment along the sequence length
+        for tree in ts.trees():
+            start = int(tree.interval.left)
+            end = int(tree.interval.right)
+            
+            # Convert the specific interval's tree to a Newick string
+            newick_str = tree.newick()
+            
+            # Write out bed file
+            bed_file.write(f"{chromosome}\t{start}\t{end}\t{newick_str}\n")
+
+# Example Usage:
+export_arg_to_tree_bed("myarg.argn", "chr1", "myarg_chr1_trees.bed")
+```
+
+
+Then you can combine all of the ARGs for each chromosome for use in ARGHelpR.
+
+## Converting output from tskit
+
+```{python}
+import tskit
+
+def ts_to_bed(tree_sequence_path, chromosome, output_bed):
+    """
+    Converts a tskit tree sequence into a BED file where the 
+    4th column contains the phylogeny (Newick string) for each interval.
+    """
+    # Load the succinct tree sequence (ARG)
+    ts = tskit.load(tree_sequence_path)
+    
+    with open(output_bed, "w") as bed_file:
+        # Iterate through every local tree along the genome
+        for tree in ts.trees():
+            # Get 0-based start and end positions for the interval
+            start = int(tree.interval.left)
+            end = int(tree.interval.right)
+            
+            # Generate the Newick string representation of the phylogeny
+            newick_tree = tree.newick()
+            
+            # Write a tab-separated line: chrom, start, end, name/phylogeny
+            bed_file.write(f"{chromosome}\t{start}\t{end}\t{newick_tree}\n")
+
+# Example Usage:
+ts_to_bed("myarg.trees", "chr1", "myarg_chr1_trees.bed")
+
+```
+
+Then you can combine all of the ARGs for each chromosome for use in ARGHelpR.
+
+## Literature Cited
+
