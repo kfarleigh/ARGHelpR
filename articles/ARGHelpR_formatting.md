@@ -2,7 +2,7 @@
 
 Written by: Keaka Farleigh, Ph.D.  
 Date: September, 16th, 2026.  
-Date last modified: September, 16th, 2026
+Date last modified: September, 17th, 2026
 
 ## Purpose
 
@@ -23,28 +23,38 @@ The is natively output by
 bed format. We provide a couple scripts below to help. **Note that these
 are python scripts.**
 
-## Converting output from ARGNeedle
+The `smc2bed` will generate a bed file for each ARG analysis, as will
+the scripts below. You can use the command `cat *.bed > my_args.bed` to
+combine all of them if you ran them seperately for different regions of
+the genome.
+
+## Converting output from ARG-Needle
+
+This is a script to convert output from
+[ARG-Needle](https://palamaralab.github.io/software/argneedle/)([Zhang
+et al., 2023](https://www.nature.com/articles/s41588-023-01379-x)).
 
 ``` r
 import arg_needle_lib
 import tskit
 
 def export_arg_to_tree_bed(argn_path, chromosome, output_bed):
-    # 1. Load the inferred ARG from the .argn file
+    # Load the inferred ARG from the .argn file
     arg_obj = arg_needle_lib.load_arg(argn_path)
     
-    # 2. Convert the ARG object to a tskit TreeSequence object
+    # Convert the ARG object to a tskit TreeSequence object
     # This automatically splits the genome into non-recombining interval segments
     ts = arg_needle_lib.arg_to_tskit(arg_obj)
     
-    # 3. Open the output file and write intervals in bed format
+    # Write intervals in bed format
     with open(output_bed, 'w') as bed_file:
         # Iterate through each local tree segment along the sequence length
         for tree in ts.trees():
+            # Get start and end positions for the interval
             start = int(tree.interval.left)
             end = int(tree.interval.right)
             
-            # Convert the specific interval's tree to a Newick string
+            # Generate the Newick string phylogeny
             newick_str = tree.newick()
             
             # Write out bed file
@@ -55,32 +65,33 @@ export_arg_to_tree_bed("myarg.argn", "chr1", "myarg_chr1_trees.bed")
 ```
 
 Then you can combine all of the ARGs for each chromosome for use in
-ARGHelpR.
+ARGHelpR (see cat command above).
 
-## Converting output from tskit
+## Converting output from tsinfer
+
+This is a script to convert output from
+[tsinfer](https://tskit.dev/tsinfer/docs/stable/inference.html)([Kelleher
+et al., 2019](https://www.nature.com/articles/s41588-019-0483-y)).
 
 ``` r
 import tskit
 
 def ts_to_bed(tree_sequence_path, chromosome, output_bed):
-    """
-    Converts a tskit tree sequence into a BED file where the 
-    4th column contains the phylogeny (Newick string) for each interval.
-    """
-    # Load the succinct tree sequence (ARG)
+  
+    # Load the ARG
     ts = tskit.load(tree_sequence_path)
     
     with open(output_bed, "w") as bed_file:
         # Iterate through every local tree along the genome
         for tree in ts.trees():
-            # Get 0-based start and end positions for the interval
+            # Get start and end positions for the interval
             start = int(tree.interval.left)
             end = int(tree.interval.right)
             
-            # Generate the Newick string representation of the phylogeny
+            # Generate the Newick string phylogeny
             newick_tree = tree.newick()
             
-            # Write a tab-separated line: chrom, start, end, name/phylogeny
+            # Write out bed file
             bed_file.write(f"{chromosome}\t{start}\t{end}\t{newick_tree}\n")
 
 # Example Usage:
@@ -88,6 +99,17 @@ ts_to_bed("myarg.trees", "chr1", "myarg_chr1_trees.bed")
 ```
 
 Then you can combine all of the ARGs for each chromosome for use in
-ARGHelpR.
+ARGHelpR (see cat command above).
+
+Please reach out to Keaka Farleigh if you have any questions.
 
 ## Literature Cited
+
+Kelleher, J., Wong, Y., Wohns, A. W., Fadil, C., Albers, P. K., &
+McVean, G. (2019). Inferring whole-genome histories in large population
+datasets. *Nature genetics*, *51*(9), 1330-1338.
+
+Zhang, B. C., Biddanda, A., Gunnarsson, Á. F., Cooper, F., & Palamara,
+P. F. (2023). Biobank-scale inference of ancestral recombination graphs
+enables genealogical analysis of complex traits. *Nature Genetics*,
+*55*(5), 768-776.

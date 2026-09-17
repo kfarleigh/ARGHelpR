@@ -68,7 +68,7 @@
     
 <p>Written by: Keaka Farleigh, Ph.D.<br>
 Date: September, 16th, 2026.<br>
-Date last modified: September, 16th, 2026</p>
+Date last modified: September, 17th, 2026</p>
 <div class="section level2">
 <h2 id="purpose">Purpose<a class="anchor" aria-label="anchor" href="#purpose"></a>
 </h2>
@@ -87,73 +87,87 @@ the fourth column contains the ARG for that region.</p>
 <code>smc2bed</code> function, but we have to convert output from other
 programs to bed format. We provide a couple scripts below to help.
 <strong>Note that these are python scripts.</strong></p>
+<p>The <code>smc2bed</code> will generate a bed file for each ARG
+analysis, as will the scripts below. You can use the command
+<code>cat *.bed &gt; my_args.bed</code> to combine all of them if you
+ran them seperately for different regions of the genome.</p>
 </div>
 <div class="section level2">
-<h2 id="converting-output-from-argneedle">Converting output from ARGNeedle<a class="anchor" aria-label="anchor" href="#converting-output-from-argneedle"></a>
+<h2 id="converting-output-from-arg-needle">Converting output from ARG-Needle<a class="anchor" aria-label="anchor" href="#converting-output-from-arg-needle"></a>
 </h2>
+<p>This is a script to convert output from <a href="https://palamaralab.github.io/software/argneedle/" class="external-link">ARG-Needle</a>(<a href="https://www.nature.com/articles/s41588-023-01379-x" class="external-link">Zhang et al.,
+2023</a>).</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>import arg_needle_lib</span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>import tskit</span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>def <span class="fu">export_arg_to_tree_bed</span>(argn_path, chromosome, output_bed)<span class="sc">:</span></span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>    <span class="co"># 1. Load the inferred ARG from the .argn file</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>    <span class="co"># Load the inferred ARG from the .argn file</span></span>
 <span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>    arg_obj <span class="ot">=</span> <span class="fu">arg_needle_lib.load_arg</span>(argn_path)</span>
 <span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>    </span>
-<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>    <span class="co"># 2. Convert the ARG object to a tskit TreeSequence object</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>    <span class="co"># Convert the ARG object to a tskit TreeSequence object</span></span>
 <span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>    <span class="co"># This automatically splits the genome into non-recombining interval segments</span></span>
 <span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>    ts <span class="ot">=</span> <span class="fu">arg_needle_lib.arg_to_tskit</span>(arg_obj)</span>
 <span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>    </span>
-<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>    <span class="co"># 3. Open the output file and write intervals in bed format</span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>    <span class="co"># Write intervals in bed format</span></span>
 <span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>    with <span class="fu">open</span>(output_bed, <span class="st">'w'</span>) as bed_file<span class="sc">:</span></span>
 <span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>        <span class="co"># Iterate through each local tree segment along the sequence length</span></span>
 <span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>        <span class="cf">for</span> tree <span class="cf">in</span> <span class="fu">ts.trees</span>()<span class="sc">:</span></span>
-<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a>            start <span class="ot">=</span> <span class="fu">int</span>(tree.interval.left)</span>
-<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a>            end <span class="ot">=</span> <span class="fu">int</span>(tree.interval.right)</span>
-<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a>            </span>
-<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a>            <span class="co"># Convert the specific interval's tree to a Newick string</span></span>
-<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a>            newick_str <span class="ot">=</span> <span class="fu">tree.newick</span>()</span>
-<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a>            </span>
-<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a>            <span class="co"># Write out bed file</span></span>
-<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a>            <span class="fu">bed_file.write</span>(f<span class="st">"{chromosome}</span><span class="sc">\t</span><span class="st">{start}</span><span class="sc">\t</span><span class="st">{end}</span><span class="sc">\t</span><span class="st">{newick_str}</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a></span>
-<span id="cb1-25"><a href="#cb1-25" tabindex="-1"></a><span class="co"># Example Usage:</span></span>
-<span id="cb1-26"><a href="#cb1-26" tabindex="-1"></a><span class="fu">export_arg_to_tree_bed</span>(<span class="st">"myarg.argn"</span>, <span class="st">"chr1"</span>, <span class="st">"myarg_chr1_trees.bed"</span>)</span></code></pre></div>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a>            <span class="co"># Get start and end positions for the interval</span></span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a>            start <span class="ot">=</span> <span class="fu">int</span>(tree.interval.left)</span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a>            end <span class="ot">=</span> <span class="fu">int</span>(tree.interval.right)</span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a>            </span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a>            <span class="co"># Generate the Newick string phylogeny</span></span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a>            newick_str <span class="ot">=</span> <span class="fu">tree.newick</span>()</span>
+<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a>            </span>
+<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a>            <span class="co"># Write out bed file</span></span>
+<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a>            <span class="fu">bed_file.write</span>(f<span class="st">"{chromosome}</span><span class="sc">\t</span><span class="st">{start}</span><span class="sc">\t</span><span class="st">{end}</span><span class="sc">\t</span><span class="st">{newick_str}</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb1-25"><a href="#cb1-25" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" tabindex="-1"></a><span class="co"># Example Usage:</span></span>
+<span id="cb1-27"><a href="#cb1-27" tabindex="-1"></a><span class="fu">export_arg_to_tree_bed</span>(<span class="st">"myarg.argn"</span>, <span class="st">"chr1"</span>, <span class="st">"myarg_chr1_trees.bed"</span>)</span></code></pre></div>
 <p>Then you can combine all of the ARGs for each chromosome for use in
-ARGHelpR.</p>
+ARGHelpR (see cat command above).</p>
 </div>
 <div class="section level2">
-<h2 id="converting-output-from-tskit">Converting output from tskit<a class="anchor" aria-label="anchor" href="#converting-output-from-tskit"></a>
+<h2 id="converting-output-from-tsinfer">Converting output from tsinfer<a class="anchor" aria-label="anchor" href="#converting-output-from-tsinfer"></a>
 </h2>
+<p>This is a script to convert output from <a href="https://tskit.dev/tsinfer/docs/stable/inference.html" class="external-link">tsinfer</a>(<a href="https://www.nature.com/articles/s41588-019-0483-y" class="external-link">Kelleher et
+al., 2019</a>).</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>import tskit</span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>def <span class="fu">ts_to_bed</span>(tree_sequence_path, chromosome, output_bed)<span class="sc">:</span></span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>    <span class="st">"""</span></span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="st">    Converts a tskit tree sequence into a BED file where the </span></span>
-<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="st">    4th column contains the phylogeny (Newick string) for each interval.</span></span>
-<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="st">    """</span></span>
-<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>    <span class="co"># Load the succinct tree sequence (ARG)</span></span>
-<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>    ts <span class="ot">=</span> <span class="fu">tskit.load</span>(tree_sequence_path)</span>
-<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>    </span>
-<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>    with <span class="fu">open</span>(output_bed, <span class="st">"w"</span>) as bed_file<span class="sc">:</span></span>
-<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>        <span class="co"># Iterate through every local tree along the genome</span></span>
-<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>        <span class="cf">for</span> tree <span class="cf">in</span> <span class="fu">ts.trees</span>()<span class="sc">:</span></span>
-<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>            <span class="co"># Get 0-based start and end positions for the interval</span></span>
-<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a>            start <span class="ot">=</span> <span class="fu">int</span>(tree.interval.left)</span>
-<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a>            end <span class="ot">=</span> <span class="fu">int</span>(tree.interval.right)</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>  </span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>    <span class="co"># Load the ARG</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>    ts <span class="ot">=</span> <span class="fu">tskit.load</span>(tree_sequence_path)</span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>    </span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>    with <span class="fu">open</span>(output_bed, <span class="st">"w"</span>) as bed_file<span class="sc">:</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>        <span class="co"># Iterate through every local tree along the genome</span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>        <span class="cf">for</span> tree <span class="cf">in</span> <span class="fu">ts.trees</span>()<span class="sc">:</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>            <span class="co"># Get start and end positions for the interval</span></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>            start <span class="ot">=</span> <span class="fu">int</span>(tree.interval.left)</span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>            end <span class="ot">=</span> <span class="fu">int</span>(tree.interval.right)</span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>            </span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a>            <span class="co"># Generate the Newick string phylogeny</span></span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a>            newick_tree <span class="ot">=</span> <span class="fu">tree.newick</span>()</span>
 <span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a>            </span>
-<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a>            <span class="co"># Generate the Newick string representation of the phylogeny</span></span>
-<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a>            newick_tree <span class="ot">=</span> <span class="fu">tree.newick</span>()</span>
-<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a>            </span>
-<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a>            <span class="co"># Write a tab-separated line: chrom, start, end, name/phylogeny</span></span>
-<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a>            <span class="fu">bed_file.write</span>(f<span class="st">"{chromosome}</span><span class="sc">\t</span><span class="st">{start}</span><span class="sc">\t</span><span class="st">{end}</span><span class="sc">\t</span><span class="st">{newick_tree}</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a></span>
-<span id="cb2-24"><a href="#cb2-24" tabindex="-1"></a><span class="co"># Example Usage:</span></span>
-<span id="cb2-25"><a href="#cb2-25" tabindex="-1"></a><span class="fu">ts_to_bed</span>(<span class="st">"myarg.trees"</span>, <span class="st">"chr1"</span>, <span class="st">"myarg_chr1_trees.bed"</span>)</span></code></pre></div>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a>            <span class="co"># Write out bed file</span></span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a>            <span class="fu">bed_file.write</span>(f<span class="st">"{chromosome}</span><span class="sc">\t</span><span class="st">{start}</span><span class="sc">\t</span><span class="st">{end}</span><span class="sc">\t</span><span class="st">{newick_tree}</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a><span class="co"># Example Usage:</span></span>
+<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a><span class="fu">ts_to_bed</span>(<span class="st">"myarg.trees"</span>, <span class="st">"chr1"</span>, <span class="st">"myarg_chr1_trees.bed"</span>)</span></code></pre></div>
 <p>Then you can combine all of the ARGs for each chromosome for use in
-ARGHelpR.</p>
+ARGHelpR (see cat command above).</p>
+<p>Please reach out to Keaka Farleigh if you have any questions.</p>
 </div>
 <div class="section level2">
 <h2 id="literature-cited">Literature Cited<a class="anchor" aria-label="anchor" href="#literature-cited"></a>
 </h2>
+<p>Kelleher, J., Wong, Y., Wohns, A. W., Fadil, C., Albers, P. K., &amp;
+McVean, G. (2019). Inferring whole-genome histories in large population
+datasets. <em>Nature genetics</em>, <em>51</em>(9), 1330-1338.</p>
+<p>Zhang, B. C., Biddanda, A., Gunnarsson, Á. F., Cooper, F., &amp;
+Palamara, P. F. (2023). Biobank-scale inference of ancestral
+recombination graphs enables genealogical analysis of complex traits.
+<em>Nature Genetics</em>, <em>55</em>(5), 768-776.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
