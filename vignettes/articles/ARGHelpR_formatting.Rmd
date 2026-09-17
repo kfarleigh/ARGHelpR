@@ -27,13 +27,13 @@ To help you understand the input format for ARGHelpR and how to convert the outp
 
 ARGHelpR uses bed files for analysis. There are four columns that are tab-delimited. The first column contains the chromosome, the second contains the start position, the third contains the end position, and the fourth column contains the ARG for that region.
 
-The is natively output by [ARGWeaver](), using the `smc2bed` function, but we have to convert output from other programs to bed format. We provide a couple scripts below to help. **Note that these are python scripts.** 
+The is natively output by [ARGWeaver](https://github.com/mdrasmus/argweaver) ([Rasmussen et al., 2014](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1004342)), using the `smc2bed` function, but we have to convert output from other programs to bed format. We provide a couple scripts below to help. **Note that these are python scripts.** 
 
 The `smc2bed` will generate a bed file for each ARG analysis, as will the scripts below. You can use the command `cat *.bed > my_args.bed` to combine all of them if you ran them seperately for different regions of the genome.
 
 ## Converting output from ARG-Needle
 
-This is a script to convert output from [ARG-Needle](https://palamaralab.github.io/software/argneedle/)([Zhang et al., 2023](https://www.nature.com/articles/s41588-023-01379-x)).
+This is a script to convert output from [ARG-Needle](https://palamaralab.github.io/software/argneedle/) ([Zhang et al., 2023](https://www.nature.com/articles/s41588-023-01379-x)).
 
 ```{r, eval=FALSE}
 import arg_needle_lib
@@ -70,7 +70,7 @@ Then you can combine all of the ARGs for each chromosome for use in ARGHelpR (se
 
 ## Converting output from tsinfer
 
-This is a script to convert output from [tsinfer](https://tskit.dev/tsinfer/docs/stable/inference.html)([Kelleher et al., 2019](https://www.nature.com/articles/s41588-019-0483-y)).
+This is a script to convert output from [tsinfer](https://tskit.dev/tsinfer/docs/stable/inference.html) ([Kelleher et al., 2019](https://www.nature.com/articles/s41588-019-0483-y)).
 
 ```{r, eval=FALSE}
 import tskit
