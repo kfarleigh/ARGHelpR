@@ -18,10 +18,11 @@ contains the start position, the third contains the end position, and
 the fourth column contains the ARG for that region.
 
 The is natively output by
-[ARGWeaver](https://kfarleigh.github.io/ARGHelpR/articles/), using the
-`smc2bed` function, but we have to convert output from other programs to
-bed format. We provide a couple scripts below to help. **Note that these
-are python scripts.**
+[ARGWeaver](https://github.com/mdrasmus/argweaver) ([Rasmussen et al.,
+2014](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1004342)),
+using the `smc2bed` function, but we have to convert output from other
+programs to bed format. We provide a couple scripts below to help.
+**Note that these are python scripts.**
 
 The `smc2bed` will generate a bed file for each ARG analysis, as will
 the scripts below. You can use the command `cat *.bed > my_args.bed` to
@@ -31,7 +32,7 @@ the genome.
 ## Converting output from ARG-Needle
 
 This is a script to convert output from
-[ARG-Needle](https://palamaralab.github.io/software/argneedle/)([Zhang
+[ARG-Needle](https://palamaralab.github.io/software/argneedle/) ([Zhang
 et al., 2023](https://www.nature.com/articles/s41588-023-01379-x)).
 
 ``` r
@@ -70,8 +71,9 @@ ARGHelpR (see cat command above).
 ## Converting output from tsinfer
 
 This is a script to convert output from
-[tsinfer](https://tskit.dev/tsinfer/docs/stable/inference.html)([Kelleher
-et al., 2019](https://www.nature.com/articles/s41588-019-0483-y)).
+[tsinfer](https://tskit.dev/tsinfer/docs/stable/inference.html)
+([Kelleher et al.,
+2019](https://www.nature.com/articles/s41588-019-0483-y)).
 
 ``` r
 import tskit
@@ -108,6 +110,10 @@ Please reach out to Keaka Farleigh if you have any questions.
 Kelleher, J., Wong, Y., Wohns, A. W., Fadil, C., Albers, P. K., &
 McVean, G. (2019). Inferring whole-genome histories in large population
 datasets. *Nature genetics*, *51*(9), 1330-1338.
+
+Rasmussen, M. D., Hubisz, M. J., Gronau, I., & Siepel, A. (2014).
+Genome-wide inference of ancestral recombination graphs. *PLoS
+genetics*, *10*(5), e1004342.
 
 Zhang, B. C., Biddanda, A., Gunnarsson, Á. F., Cooper, F., & Palamara,
 P. F. (2023). Biobank-scale inference of ancestral recombination graphs

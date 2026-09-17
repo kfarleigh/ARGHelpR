@@ -83,10 +83,11 @@ programs into this format.</p>
 tab-delimited. The first column contains the chromosome, the second
 contains the start position, the third contains the end position, and
 the fourth column contains the ARG for that region.</p>
-<p>The is natively output by <a href="">ARGWeaver</a>, using the
-<code>smc2bed</code> function, but we have to convert output from other
-programs to bed format. We provide a couple scripts below to help.
-<strong>Note that these are python scripts.</strong></p>
+<p>The is natively output by <a href="https://github.com/mdrasmus/argweaver" class="external-link">ARGWeaver</a> (<a href="https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1004342" class="external-link">Rasmussen
+et al., 2014</a>), using the <code>smc2bed</code> function, but we have
+to convert output from other programs to bed format. We provide a couple
+scripts below to help. <strong>Note that these are python
+scripts.</strong></p>
 <p>The <code>smc2bed</code> will generate a bed file for each ARG
 analysis, as will the scripts below. You can use the command
 <code>cat *.bed &gt; my_args.bed</code> to combine all of them if you
@@ -95,8 +96,9 @@ ran them seperately for different regions of the genome.</p>
 <div class="section level2">
 <h2 id="converting-output-from-arg-needle">Converting output from ARG-Needle<a class="anchor" aria-label="anchor" href="#converting-output-from-arg-needle"></a>
 </h2>
-<p>This is a script to convert output from <a href="https://palamaralab.github.io/software/argneedle/" class="external-link">ARG-Needle</a>(<a href="https://www.nature.com/articles/s41588-023-01379-x" class="external-link">Zhang et al.,
-2023</a>).</p>
+<p>This is a script to convert output from <a href="https://palamaralab.github.io/software/argneedle/" class="external-link">ARG-Needle</a>
+(<a href="https://www.nature.com/articles/s41588-023-01379-x" class="external-link">Zhang et
+al., 2023</a>).</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>import arg_needle_lib</span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>import tskit</span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a></span>
@@ -130,7 +132,8 @@ ARGHelpR (see cat command above).</p>
 <div class="section level2">
 <h2 id="converting-output-from-tsinfer">Converting output from tsinfer<a class="anchor" aria-label="anchor" href="#converting-output-from-tsinfer"></a>
 </h2>
-<p>This is a script to convert output from <a href="https://tskit.dev/tsinfer/docs/stable/inference.html" class="external-link">tsinfer</a>(<a href="https://www.nature.com/articles/s41588-019-0483-y" class="external-link">Kelleher et
+<p>This is a script to convert output from <a href="https://tskit.dev/tsinfer/docs/stable/inference.html" class="external-link">tsinfer</a>
+(<a href="https://www.nature.com/articles/s41588-019-0483-y" class="external-link">Kelleher et
 al., 2019</a>).</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>import tskit</span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a></span>
@@ -164,6 +167,9 @@ ARGHelpR (see cat command above).</p>
 <p>Kelleher, J., Wong, Y., Wohns, A. W., Fadil, C., Albers, P. K., &amp;
 McVean, G. (2019). Inferring whole-genome histories in large population
 datasets. <em>Nature genetics</em>, <em>51</em>(9), 1330-1338.</p>
+<p>Rasmussen, M. D., Hubisz, M. J., Gronau, I., &amp; Siepel, A. (2014).
+Genome-wide inference of ancestral recombination graphs. <em>PLoS
+genetics</em>, <em>10</em>(5), e1004342.</p>
 <p>Zhang, B. C., Biddanda, A., Gunnarsson, Á. F., Cooper, F., &amp;
 Palamara, P. F. (2023). Biobank-scale inference of ancestral
 recombination graphs enables genealogical analysis of complex traits.
