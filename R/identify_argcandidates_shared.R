@@ -51,9 +51,9 @@ identify_argcandidates_shared <- function(dat, analysis = "all", background = NU
     ### Identify args that follow different models
 
     if("BS" %in% analysis | analysis == "all"){
-      RI_args <- dat %>% dplyr::filter(tmrca >= tmrca.thresh)
+      BS_args <- dat %>% dplyr::filter(tmrca >= tmrca.thresh)
     } else{
-      RI_args <- NULL
+      BS_args <- NULL
     }
     if("INT" %in% analysis | analysis == "all"){
       INT_args <- dat %>% dplyr::filter(tmrca < tmrca.iqr.low & (pop1.meantmrcaw >= pop1.tmrcaw.thresh & pop2.meantmrcaw >= pop2.tmrcaw.thresh))
