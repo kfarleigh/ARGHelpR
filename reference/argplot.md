@@ -54,5 +54,5 @@ a phylogeny with tips colored according to population.
 ``` r
 # \donttest{
 test_plot <- argplot(arg = rattlesnake_args[1,4], pop1 = pop1_inds, pop2 = pop2_inds, col = c("#71BED6","#EDAF49"))# }
-#> Error: object 'rattlesnake_args' not found
+#> Error in rattlesnake_args[1, 4]: incorrect number of dimensions
 ```

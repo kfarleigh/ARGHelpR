@@ -60,5 +60,5 @@ Keaka Farleigh
 ``` r
 # \donttest{
 Test <- argstats(arg.dat = rattlesnake_args, pop1 = pop1_inds, pop2 = pop2_inds, pop1.name = "continental", pop2.name = "stephensi")# }
-#> Error: object 'rattlesnake_args' not found
+#> Error: object 'pop1_inds' not found
 ```
