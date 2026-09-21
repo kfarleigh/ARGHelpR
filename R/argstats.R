@@ -14,7 +14,13 @@
 #'
 #' @examples
 #' \donttest{
-#' Test <- argstats(arg.dat = rattlesnake_args, pop1 = pop1_inds, pop2 = pop2_inds, pop1.name = "continental", pop2.name = "stephensi")}
+#' data(rattlesnake_args)
+#' data(rattlesnake_pops)
+#'
+#' pisgah <- rattlesnake_pops[which(rattlesnake_pops$species == "pisgah"),]
+#' continental <- rattlesnake_pops[which(rattlesnake_pops$species == "continental"),]
+#'
+#' Test <- argstats(arg.dat = rattlesnake_args, pop1 = pisgah$sample, pop2 = continental$sample, pop1.name = "pisgah", pop2.name = "continental")}
 argstats <- function(arg.dat, pop1, pop2, pop1.name, pop2.name, n.cores = 1, n.haps = 2){
 
   # Detect operating system (OS)
@@ -44,6 +50,9 @@ argstats <- function(arg.dat, pop1, pop2, pop1.name, pop2.name, n.cores = 1, n.h
 
       # Stop the cluster to free up memory
       parallel::stopCluster(cl)
+
+      remove(n_cores, cl)
+
       } else {
 
         argstat_calcs <- parallel::mclapply(arg.dat, argstats_helper, pop1 = pop1, pop2 = pop2, pop1.name = pop1.name, pop2.name = pop2.name, n.haps = n.haps, mc.cores = n.cores, mc.silent = TRUE)
@@ -51,7 +60,6 @@ argstats <- function(arg.dat, pop1, pop2, pop1.name, pop2.name, n.cores = 1, n.h
     }
   }
 
-  remove(n_cores, cl)
 
   return(argstat_calcs)
 

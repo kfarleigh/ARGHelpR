@@ -49,7 +49,6 @@ argstats_helper <- function(arg.dat, pop1, pop2, pop1.name, pop2.name, n.haps = 
 
   }
 
-
   ### Create a data frame to store results
   arg.stats.df <- data.frame(chromosome = arg.dat$chromosome,
                              start = arg.dat$start, end = arg.dat$end,
@@ -92,7 +91,7 @@ argstats_helper <- function(arg.dat, pop1, pop2, pop1.name, pop2.name, n.haps = 
   n.tips <- length(tree$tip.label)
 
   # Get node depths
-  node.depths <- node.depth.edgelength(tree)
+  node.depths <- ape::node.depth.edgelength(tree)
 
   # Get the coalescence times
   coalescent.times <- sort(tmrca - node.depths[(length(tree$tip.label) + 1):length(node.depths)])

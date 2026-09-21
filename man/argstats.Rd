@@ -29,7 +29,13 @@ Calculate ancestral recombination graph summary statistics.
 }
 \examples{
 \donttest{
-Test <- argstats(arg.dat = rattlesnake_args, pop1 = pop1_inds, pop2 = pop2_inds, pop1.name = "continental", pop2.name = "stephensi")}
+data(rattlesnake_args)
+data(rattlesnake_pops)
+
+pisgah <- rattlesnake_pops[which(rattlesnake_pops$species == "pisgah"),]
+continental <- rattlesnake_pops[which(rattlesnake_pops$species == "continental"),]
+
+Test <- argstats(arg.dat = rattlesnake_args, pop1 = pisgah$sample, pop2 = continental$sample, pop1.name = "pisgah", pop2.name = "continental")}
 }
 \author{
 Keaka Farleigh
