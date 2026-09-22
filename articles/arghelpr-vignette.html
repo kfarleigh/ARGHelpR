@@ -38,7 +38,6 @@
     <li><a class="dropdown-item" href="../articles/ARGHelpR_statistics.html">Understanding ARG stats</a></li>
     <li><a class="dropdown-item" href="../articles/ARGHelpR_identifyfuncs.html">Identifying selection and introgression</a></li>
     <li><a class="dropdown-item" href="../articles/ARGHelpR_formatting.html">Formatting data</a></li>
-    <li><a class="dropdown-item" href="../articles/ARGHelpR_plotting.html">Plotting ARGs</a></li>
   </ul>
 </li>
       </ul>
@@ -66,9 +65,282 @@
 
     
     
+<div class="section level2">
+<h2 id="purpose">Purpose<a class="anchor" aria-label="anchor" href="#purpose"></a>
+</h2>
+<p>To show you how to use ARGHelpR to summarize ancestral recombination
+graphs (ARGs), identify ARGs that may be indicative of selection
+influencing a particular region, identify ARGs that may shown signs of
+introgression, and visualize these results.</p>
+<p><strong>Note we infer ARGs that represent regions influenced by
+selection and those that represent introgressed regions. This is only
+for the purposes of showing you how ARGHelpR works. You must understand
+you study system and determien which of these analyses are appropriate.
+For example, is there support for introgression or divergence? Please
+email Keaka Farleigh if you have any questions</strong>.</p>
+<p>Please see the <a href="https://kfarleigh.github.io/ARGHelpR/articles/ARGHelpR_arg_background.html">What’s
+an ARG article</a> if you would like some background on ARGs.</p>
+<p>This vignette will proceed in five steps:</p>
+<ol style="list-style-type: decimal">
+<li>Inspect data and prepare it for analysis</li>
+<li>Calculate ARG statistics</li>
+<li>Identify divergence candidates</li>
+<li>Identify introgression and balancing selection candidates</li>
+<li>Visualize ARGs</li>
+</ol>
+<div class="section level3">
+<h3 id="inspect-data">1. Inspect data<a class="anchor" aria-label="anchor" href="#inspect-data"></a>
+</h3>
+<p>ARGHelpR expects data to be a list where each element is a data frame
+containing information for a particular ARG; the first column is named
+chromosome and indicates the chromosome, the second column is named
+start indicates the start position of an ARG, the third position is
+named end indicates the end position of the ARG, and the fourth column
+is named tree and indicates the ARG itself. This is best represented as
+a bed file. You can find example scripts to convert your ARG output to a
+bed file in the format expected by ARGHelpR in the <a href="https://kfarleigh.github.io/ARGHelpR/articles/ARGHelpR_formatting.html">formatting
+data article</a>.</p>
+<p>After we have a bed file, we can read it into R.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://kfarleigh.github.io/ARGHelpR/">ARGHelpR</a></span><span class="op">)</span></span></code></pre></div>
-  </main>
+<code class="sourceCode R"><span></span>
+<span><span class="co"># Assuming a bed file with columns named chromosome, start, end, and tree</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.delim</a></span><span class="op">(</span><span class="st">"my_argdata.bed"</span>, header <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Split each row into a list element</span></span>
+<span><span class="va">data_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html" class="external-link">split</a></span><span class="op">(</span><span class="va">rattlesnake_args</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">rattlesnake_args</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Let’s look at the data already in ARGHelpR. We see that the ARG data
+(<code>rattlesnake_args</code>) is a list with many elements and that we
+also have a population assignment file (<code>rattlesnake_pops</code>).
+The <code>rattlesnake_pops</code> contains population assignment data
+for each haplotype in your data. This is why there are <code>_1</code>
+and <code>_2</code> appended to the individual names in our data.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">### Load ARGHelpR</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://kfarleigh.github.io/ARGHelpR/">ARGHelpR</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"rattlesnake_args"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">rattlesnake_args</span>, list.len <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="co">#&gt; List of 1000</span></span>
+<span><span class="co">#&gt;  $ 1   :'data.frame':    1 obs. of  4 variables:</span></span>
+<span><span class="co">#&gt;   ..$ chromosome: chr "chr2_scaffold_1_1contigs"</span></span>
+<span><span class="co">#&gt;   ..$ start     : int 151119839</span></span>
+<span><span class="co">#&gt;   ..$ end       : int 151119908</span></span>
+<span><span class="co">#&gt;   .. [list output truncated]</span></span>
+<span><span class="co">#&gt;  $ 2   :'data.frame':    1 obs. of  4 variables:</span></span>
+<span><span class="co">#&gt;   ..$ chromosome: chr "chr3_scaffold_2_1contigs"</span></span>
+<span><span class="co">#&gt;   ..$ start     : int 196576009</span></span>
+<span><span class="co">#&gt;   ..$ end       : int 196577098</span></span>
+<span><span class="co">#&gt;   .. [list output truncated]</span></span>
+<span><span class="co">#&gt;  $ 3   :'data.frame':    1 obs. of  4 variables:</span></span>
+<span><span class="co">#&gt;   ..$ chromosome: chr "chr7_scaffold_8_1contigs"</span></span>
+<span><span class="co">#&gt;   ..$ start     : int 73689189</span></span>
+<span><span class="co">#&gt;   ..$ end       : int 73689388</span></span>
+<span><span class="co">#&gt;   .. [list output truncated]</span></span>
+<span><span class="co">#&gt;   [list output truncated]</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"rattlesnake_pops"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">rattlesnake_pops</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 'data.frame':    30 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;  $ sample : chr  "SR0016_1" "SR0017_1" "SR0018_1" "SR0021_1" ...</span></span>
+<span><span class="co">#&gt;  $ species: chr  "pop2" "pop2" "pop2" "pop1" ...</span></span></code></pre></div>
+<p>Now that we have looked at our data we can calculate some
+statistics.</p>
+</div>
+<div class="section level3">
+<h3 id="calculate-arg-statistics">2. Calculate ARG statistics<a class="anchor" aria-label="anchor" href="#calculate-arg-statistics"></a>
+</h3>
+<p>We calculate ARG statistics using the <code>argstats</code> function.
+This calculates various statistics, which are explained in the <a href="https://kfarleigh.github.io/ARGHelpR/articles/ARGHelpR_statistics.html">understanding
+ARG stats article</a>. The function requires are ARG data
+(<code>rattlesnake_args</code>) and population assignment information
+<code>rattlesnake_pops</code>. We also supply the names of each
+population to help us interpret the output. Users can also supply the
+number of cores to use <code>n.cores</code> argument to parallelize the
+calculations. While our dataset is small, whole genome data can be very
+large and parallelization is the only way to make compute time
+reasonable. You can also specify the <code>n.haps</code> argument, which
+influences how ARGHelpR calculates the time to the most recent common
+ancestor within (TMRCA<sub>W</sub>) statistic. <code>n.cores</code> and
+<code>n.haps</code> are optional.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Separate by population, this makes the function command easier. </span></span>
+<span><span class="va">pop2</span> <span class="op">&lt;-</span> <span class="va">rattlesnake_pops</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">rattlesnake_pops</span><span class="op">$</span><span class="va">species</span> <span class="op">==</span> <span class="st">"pop2"</span><span class="op">)</span>,<span class="op">]</span></span>
+<span><span class="va">pop1</span> <span class="op">&lt;-</span> <span class="va">rattlesnake_pops</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">rattlesnake_pops</span><span class="op">$</span><span class="va">species</span> <span class="op">==</span> <span class="st">"pop1"</span><span class="op">)</span>,<span class="op">]</span></span>
+<span></span>
+<span><span class="co"># Run the analysis, single core takes about 3 minutes on a machine with 16 Gb of RAM</span></span>
+<span><span class="va">snake_argstats</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/argstats.html">argstats</a></span><span class="op">(</span>arg.dat <span class="op">=</span> <span class="va">rattlesnake_args</span>, pop1 <span class="op">=</span> <span class="va">pop1</span><span class="op">$</span><span class="va">sample</span>, pop2 <span class="op">=</span> <span class="va">pop2</span><span class="op">$</span><span class="va">sample</span>, pop1.name <span class="op">=</span> <span class="st">"pop1"</span>, pop2.name <span class="op">=</span> <span class="st">"pop2"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Bind into a single data frame</span></span>
+<span><span class="va">snake_argstats_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="st">"rbind"</span>, <span class="va">snake_argstats</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Inspect the statistics</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">snake_argstats_df</span><span class="op">)</span></span>
+<span><span class="co">#&gt;                 chromosome     start       end    tmrca tmrca.50          rth</span></span>
+<span><span class="co">#&gt; 1 chr2_scaffold_1_1contigs 151119839 151119908 483196.7    515.9 0.0010676811</span></span>
+<span><span class="co">#&gt; 2 chr3_scaffold_2_1contigs 196576009 196577098 143746.0    515.9 0.0035889694</span></span>
+<span><span class="co">#&gt; 3 chr7_scaffold_8_1contigs  73689189  73689388 263567.0     83.4 0.0003164281</span></span>
+<span><span class="co">#&gt; 4 chr9_scaffold_9_1contigs   4057289   4057388 263567.0   1028.9 0.0039037512</span></span>
+<span><span class="co">#&gt; 5 chr5_scaffold_6_1contigs  19600089  19600188 483196.6     83.3 0.0001723936</span></span>
+<span><span class="co">#&gt; 6 chr1_scaffold_3_3contigs 265011529 265011538 483196.7    236.0 0.0004884139</span></span>
+<span><span class="co">#&gt;   pop1.meantmrcaw pop1.mediantmrcaw pop1.mintmrcaw pop1.maxtmrcaw pop1.mono</span></span>
+<span><span class="co">#&gt; 1       3684.0000           3684.00          515.9         6852.1     FALSE</span></span>
+<span><span class="co">#&gt; 2       1241.8500           1499.05            0.1         1969.2     FALSE</span></span>
+<span><span class="co">#&gt; 3        118.1000            118.10            0.1          236.1     FALSE</span></span>
+<span><span class="co">#&gt; 4       1331.9000           1969.20          236.0         1969.2     FALSE</span></span>
+<span><span class="co">#&gt; 5         90.2375             83.30            0.0          236.0     FALSE</span></span>
+<span><span class="co">#&gt; 6       1284.2000            159.70            0.1         3692.8     FALSE</span></span>
+<span><span class="co">#&gt;   pop2.meantmrcaw pop2.mediantmrcaw pop2.mintmrcaw pop2.maxtmrcaw pop2.mono</span></span>
+<span><span class="co">#&gt; 1           83.30             83.30           83.3           83.3     FALSE</span></span>
+<span><span class="co">#&gt; 2          258.00            258.00            0.1          515.9     FALSE</span></span>
+<span><span class="co">#&gt; 3        23257.40          23257.40        23257.4        23257.4     FALSE</span></span>
+<span><span class="co">#&gt; 4          515.90            515.90          515.9          515.9     FALSE</span></span>
+<span><span class="co">#&gt; 5            0.00              0.00            0.0            0.0     FALSE</span></span>
+<span><span class="co">#&gt; 6            0.05              0.05            0.0            0.1     FALSE</span></span>
+<span><span class="co">#&gt;   pop1 pop2</span></span>
+<span><span class="co">#&gt; 1 pop1 pop2</span></span>
+<span><span class="co">#&gt; 2 pop1 pop2</span></span>
+<span><span class="co">#&gt; 3 pop1 pop2</span></span>
+<span><span class="co">#&gt; 4 pop1 pop2</span></span>
+<span><span class="co">#&gt; 5 pop1 pop2</span></span>
+<span><span class="co">#&gt; 6 pop1 pop2</span></span>
+<span><span class="co">#&gt;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         tree</span></span>
+<span><span class="co">#&gt; 1                  ((SR0016_2:23257.3,(SR0024_1:6852.0,(SR0016_1:1969.1,(SR0023_1:1028.8,((SR0018_2:83.3,(SR0017_2:83.3,(SR0017_1:83.3,SR0018_1:83.3):0.0):0.0):432.6,((SR0030_1:83.3,SR0030_2:83.3):432.6,(SR0022_2:515.8,((SR0022_1:0.0,SR0029_1:0.0):515.8,((SR0078_2:515.8,(SR0029_2:515.8,(SR0028_2:236.0,(SR0025_2:83.3,SR0025_1:83.3):152.7):279.9):0.0):0.0,((SR0027_1:83.3,(SR0026_1:0.0,(SR0078_1:0.0,(SR0027_2:0.0,SR0026_2:0.0):0.0):0.0):83.3):432.6,(SR0028_1:515.8,(SR0031_2:83.3,SR0031_1:83.3):432.6):0.0):0.0):0.0):0.0):0.0):0.0):513.0):940.3):4882.8):16405.4):459939.3[&amp;&amp;NHX:coal_time=483196.6],(SR0023_2:6852.0,(SR0024_2:1028.8,(SR0021_2:83.3,SR0021_1:83.3):945.5):5823.1):476344.6[&amp;&amp;NHX:recomb_time=483196.6]);</span></span>
+<span><span class="co">#&gt; 2                ((((SR0024_1:1969.1,(SR0078_2:1969.1,SR0024_2:1969.1):0.0):0.0,((SR0016_1:1969.1,(SR0031_2:1969.1,(SR0023_2:1028.8,(SR0029_1:1028.8,((SR0028_1:515.8,SR0022_1:515.8):0.0,((SR0025_2:236.0,SR0022_2:236.0):0.0,(SR0029_2:0.0,SR0026_2:0.0):236.0):279.9):513.0):0.0):940.3):0.0):0.0,(SR0028_2:1028.8,(SR0027_2:1028.8,((SR0023_1:83.3,SR0026_1:83.3):152.7,(SR0025_1:236.0,(SR0078_1:236.0,(SR0021_2:236.0,(SR0031_1:236.0,(SR0021_1:236.0,SR0027_1:236.0):0.0):0.0):0.0):0.0):0.0):792.9):0.0):940.3):0.0):0.0,((SR0017_2:0.0,SR0017_1:0.0):1028.8,((SR0018_1:515.8,SR0018_2:515.8):513.0,(SR0030_1:0.0,SR0030_2:0.0):1028.8):0.0):940.3):141776.8[&amp;&amp;NHX:coal_time=42713.5],SR0016_2:143745.9[&amp;&amp;NHX:recomb_time=23257.3]);</span></span>
+<span><span class="co">#&gt; 3                                         (((SR0024_2:236.0,((SR0017_2:236.0,(SR0024_1:0.0,(SR0078_1:0.0,(SR0031_1:0.0,(SR0030_1:0.0,(SR0031_2:0.0,SR0030_2:0.0):0.0):0.0):0.0):0.0):236.0):0.0,(SR0078_2:236.0,(SR0023_2:83.3,(SR0022_1:83.3,SR0022_2:83.3):0.0):152.7):0.0):0.0):0.0,((SR0023_1:83.3,SR0026_1:83.3):152.7,(SR0021_1:83.3,SR0021_2:83.3):152.7):0.0):263330.9[&amp;&amp;NHX:recomb_time=12642.8],((SR0018_2:23257.3,(SR0016_1:6852.0,SR0018_1:6852.0):16405.4):0.0,(SR0017_1:12642.8,(SR0016_2:6852.0,(SR0025_1:0.0,(SR0028_1:0.0,((SR0027_2:0.0,(SR0025_2:0.0,(SR0029_2:0.0,SR0027_1:0.0):0.0):0.0):0.0,(SR0029_1:0.0,(SR0028_2:0.0,SR0026_2:0.0):0.0):0.0):0.0):0.0):6852.0):5790.8):10614.5):240309.6[&amp;&amp;NHX:coal_time=78376.5]);</span></span>
+<span><span class="co">#&gt; 4 (SR0024_2:263566.9[&amp;&amp;NHX:recomb_time=42713.5],(((SR0078_1:1969.1,SR0021_1:1969.1):0.0,((SR0031_1:236.0,SR0030_1:236.0):792.9,(SR0030_2:83.3,SR0031_2:83.3):945.5):940.3):1723.6,(SR0022_2:3692.7,(((SR0018_2:515.8,SR0016_2:515.8):1453.3,(SR0018_1:1969.1,(SR0016_1:515.8,SR0024_1:515.8):1453.3):0.0):1723.6,((SR0022_1:1969.1,SR0025_1:1969.1):1723.6,((SR0021_2:1969.1,(SR0078_2:1969.1,SR0023_2:1969.1):0.0):0.0,(SR0023_1:1028.8,(SR0017_2:1028.8,((SR0017_1:515.8,(SR0026_1:236.0,(SR0028_1:0.0,((SR0028_2:0.0,SR0027_2:0.0):0.0,SR0027_1:0.0):0.0):236.0):279.9):0.0,((SR0029_2:83.3,SR0029_1:83.3):432.6,(SR0025_2:515.8,SR0026_2:515.8):0.0):0.0):513.0):0.0):940.3):1723.6):0.0):0.0):0.0):259874.2)[&amp;&amp;NHX:coal_time=483196.6];</span></span>
+<span><span class="co">#&gt; 5                                             ((SR0029_2:1028.8,((SR0025_2:236.0,SR0024_2:236.0):279.9,((SR0030_2:236.0,SR0025_1:236.0):279.9,(SR0078_1:236.0,((SR0027_1:0.0,SR0027_2:0.0):83.3,(((SR0029_1:83.3,(SR0030_1:83.3,SR0028_1:83.3):0.0):0.0,(SR0028_2:83.3,SR0021_1:83.3):0.0):0.0,((SR0031_1:83.3,SR0031_2:83.3):0.0,(((SR0078_2:83.3,(SR0016_1:83.3,((SR0021_2:0.0,SR0023_1:0.0):0.0,(SR0017_1:0.0,(SR0024_1:0.0,(SR0018_1:0.0,SR0016_2:0.0):0.0):0.0):0.0):83.3):0.0):0.0,(SR0026_2:0.0,SR0026_1:0.0):83.3):0.0,(SR0022_2:83.3,SR0022_1:83.3):0.0):0.0):0.0):0.0):152.7):279.9):0.0):513.0):482167.7[&amp;&amp;NHX:recomb_time=263566.9],((SR0023_2:6852.0,SR0018_2:6852.0):0.0,SR0017_2:6852.0):476344.6[&amp;&amp;NHX:coal_time=483196.6]);</span></span>
+<span><span class="co">#&gt; 6                               ((SR0028_1:3692.7,(SR0025_2:515.8,(SR0030_2:83.3,((SR0030_1:0.0,SR0031_1:0.0):0.0,SR0031_2:0.0):83.3):432.6):3176.9):479503.9[&amp;&amp;NHX:recomb_time=263566.9],(((SR0025_1:3692.7,SR0027_1:3692.7):0.0,SR0028_2:3692.7):8950.1,(((SR0024_1:0.0,(SR0078_2:0.0,((SR0023_1:0.0,SR0027_2:0.0):0.0,((SR0024_2:0.0,SR0023_2:0.0):0.0,(SR0026_2:0.0,(SR0017_2:0.0,SR0017_1:0.0):0.0):0.0):0.0):0.0):0.0):515.8,(SR0078_1:236.0,(SR0022_1:236.0,SR0022_2:236.0):0.0):279.9):513.0,((SR0026_1:1028.8,((((SR0029_1:236.0,SR0018_1:236.0):0.0,SR0018_2:236.0):0.0,(SR0016_1:0.0,SR0016_2:0.0):236.0):792.9,SR0029_2:1028.8):0.0):0.0,(SR0021_2:83.3,SR0021_1:83.3):945.5):0.0):11614.0):470553.8[&amp;&amp;NHX:coal_time=263566.9]);</span></span></code></pre></div>
+<p>Awesome, now we have our data as a data frame. We can use this as
+input into <code>identify_argcandidates_divergence</code> and
+<code>identify_argcandidates_shared</code> to identify evidence of
+selection and/or introgression.</p>
+</div>
+<div class="section level3">
+<h3 id="identify-divergence-candidates">3. Identify divergence candidates<a class="anchor" aria-label="anchor" href="#identify-divergence-candidates"></a>
+</h3>
+<p>We will use the <code>identify_argcandidates_divergence</code> to
+identify ARGs exhibitng patterns that we would expect under different
+forms of selection, you can read the <a href="https://kfarleigh.github.io/ARGHelpR/articles/ARGHelpR_identifyfuncs.html">identifying
+selection and introgression article</a> to understand how each test
+works. Briefly, we will use patterns of the time to the most recent
+common ancestor between (TMRCA<sub>B</sub>) and time to the most recent
+common ancestor within (TMRCA<sub>W</sub>) populations/species to
+identify possible evidence of selection.</p>
+<p>ARGHelpR can identify candidates with or without a user-specified
+genomic background (<code>background</code> argument). If the
+<code>background</code> argument is supplied then the thresholds are set
+based on that, if it is left empty then ARGHelpR uses the supplied
+distributions to determine thresholds. Users can also specify their own
+thresholds using all of the different <code>threshold</code>
+arguments.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">divergence_cands</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/identify_argcandidates_divergence.html">identify_argcandidates_divergence</a></span><span class="op">(</span>dat <span class="op">=</span> <span class="va">snake_argstats_df</span>, analysis <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Bind together into a data frame </span></span>
+<span></span>
+<span><span class="va">divergence_cands_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="st">"rbind"</span>, <span class="va">divergence_cands</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Make a column telling us which scenario each ARG was identified as</span></span>
+<span><span class="va">divergence_cands_df</span><span class="op">$</span><span class="va">scenario</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">divergence_cands_df</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">divergence_cands_df</span><span class="op">$</span><span class="va">scenario</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">sub</a></span><span class="op">(</span><span class="st">"\\..*"</span>, <span class="st">""</span>, <span class="va">divergence_cands_df</span><span class="op">$</span><span class="va">scenario</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># How many of each scenario do we have?</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">divergence_cands_df</span><span class="op">$</span><span class="va">scenario</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   RI RIWP   RS   WP </span></span>
+<span><span class="co">#&gt;   51    1   32   37</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="identify-introgression-and-balancing-selection-candidates">4. Identify introgression and balancing selection candidates<a class="anchor" aria-label="anchor" href="#identify-introgression-and-balancing-selection-candidates"></a>
+</h3>
+<p>Now we will use the <code>identify_argcandidates_shared</code>
+function to identify signals of balancing selection and introgression.
+This works in the same way as
+<code>identify_argcandidates_divergence</code>.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">intro_cands</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/identify_argcandidates_shared.html">identify_argcandidates_shared</a></span><span class="op">(</span>dat <span class="op">=</span> <span class="va">snake_argstats_df</span>, analysis <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Bind together into a data frame </span></span>
+<span></span>
+<span><span class="va">intro_cands_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="st">"rbind"</span>, <span class="va">intro_cands</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Make a column telling us which scenario each ARG was identified as</span></span>
+<span><span class="va">intro_cands_df</span><span class="op">$</span><span class="va">scenario</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">intro_cands_df</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">intro_cands_df</span><span class="op">$</span><span class="va">scenario</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">sub</a></span><span class="op">(</span><span class="st">"\\..*"</span>, <span class="st">""</span>, <span class="va">intro_cands_df</span><span class="op">$</span><span class="va">scenario</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># How many of each scenario do we have?</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">intro_cands_df</span><span class="op">$</span><span class="va">scenario</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  BS INT </span></span>
+<span><span class="co">#&gt;  51 182</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="visualize-args">5. Visualize ARGs<a class="anchor" aria-label="anchor" href="#visualize-args"></a>
+</h3>
+<p>Finally, we will plot the ARGs to show the patterns that we are
+identifying. We will use the <code>argplot</code> function. This
+function requires an arg (newick string), list of individuals in each
+population (<code>pop1</code> and <code>pop2</code> arguments), and the
+color (<code>col</code> argument) you would like to assign to each
+individual. You can also supply a scale and font size if you wish
+(<code>scale</code> and <code>font.size</code> arguments). The scale
+argument is particularly useful when you want to plot multiple args
+together; we will plot a random ARG and a recurrent selection (RS) ARG
+to see how this is useful.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co"># Select an ARG to plot</span></span>
+<span><span class="va">arg_toplot</span> <span class="op">&lt;-</span> <span class="va">snake_argstats_df</span><span class="op">[</span><span class="fl">8</span>,<span class="fl">19</span><span class="op">]</span></span>
+<span></span>
+<span><span class="va">single_plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/argplot.html">argplot</a></span><span class="op">(</span><span class="va">arg_toplot</span>, pop1 <span class="op">=</span> <span class="va">pop1</span><span class="op">$</span><span class="va">sample</span>, pop2 <span class="op">=</span> <span class="va">pop2</span><span class="op">$</span><span class="va">sample</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'#7D83FF'</span>, <span class="st">'#007FFF'</span><span class="op">)</span>, font.size <span class="op">=</span> <span class="fl">0.75</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># We can change the scale to</span></span>
+<span><span class="va">single_plot_scale</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/argplot.html">argplot</a></span><span class="op">(</span><span class="va">arg_toplot</span>, pop1 <span class="op">=</span> <span class="va">pop1</span><span class="op">$</span><span class="va">sample</span>, pop2 <span class="op">=</span> <span class="va">pop2</span><span class="op">$</span><span class="va">sample</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'#7D83FF'</span>, <span class="st">'#007FFF'</span><span class="op">)</span>, scale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">275000</span><span class="op">)</span>, font.size <span class="op">=</span> <span class="fl">0.75</span><span class="op">)</span></span></code></pre></div>
+<p><img src="single_argplot.png" class="r-plt" alt="" width="400px" height="400px" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Let's plot a couple of ARGs together</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">arg_toplot1</span> <span class="op">&lt;-</span> <span class="va">snake_argstats_df</span><span class="op">[</span><span class="fl">8</span>,<span class="fl">19</span><span class="op">]</span></span>
+<span></span>
+<span><span class="va">arg_toplot2</span> <span class="op">&lt;-</span> <span class="va">divergence_cands_df</span><span class="op">[</span><span class="fl">91</span>,<span class="fl">19</span><span class="op">]</span></span>
+<span></span>
+<span><span class="va">plot1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/argplot.html">argplot</a></span><span class="op">(</span><span class="va">arg_toplot1</span>, pop1 <span class="op">=</span> <span class="va">pop1</span><span class="op">$</span><span class="va">sample</span>, pop2 <span class="op">=</span> <span class="va">pop2</span><span class="op">$</span><span class="va">sample</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'#7D83FF'</span>, <span class="st">'#007FFF'</span><span class="op">)</span>, scale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">275000</span><span class="op">)</span>, font.size <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">rs_plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/argplot.html">argplot</a></span><span class="op">(</span><span class="va">arg_toplot2</span>, pop1 <span class="op">=</span> <span class="va">pop1</span><span class="op">$</span><span class="va">sample</span>, pop2 <span class="op">=</span> <span class="va">pop2</span><span class="op">$</span><span class="va">sample</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'#7D83FF'</span>, <span class="st">'#007FFF'</span><span class="op">)</span>, scale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">275000</span><span class="op">)</span>, font.size <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span></span></code></pre></div>
+<p><img src="multipanel_wholeargs.png" class="r-plt" alt="" width="400px" height="400px" style="display: block; margin: auto;"></p>
+<p>We see that the recurrent selection ARG does indeed exhibit a reduced
+TMRCA<sub>B</sub>, which matches our expectations. What about the tips?
+The TMRCA<sub>W</sub> is also supposed to be reduced in one or both
+populations in a scenario of recurrent selection. We can focus on the
+ARG tips, by adjusting the scale.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Let's plot a couple of ARGs together</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">arg_toplot1</span> <span class="op">&lt;-</span> <span class="va">snake_argstats_df</span><span class="op">[</span><span class="fl">8</span>,<span class="fl">19</span><span class="op">]</span></span>
+<span></span>
+<span><span class="va">arg_toplot2</span> <span class="op">&lt;-</span> <span class="va">divergence_cands_df</span><span class="op">[</span><span class="fl">91</span>,<span class="fl">19</span><span class="op">]</span></span>
+<span></span>
+<span><span class="va">plot1_tips</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/argplot.html">argplot</a></span><span class="op">(</span><span class="va">arg_toplot1</span>, pop1 <span class="op">=</span> <span class="va">pop1</span><span class="op">$</span><span class="va">sample</span>, pop2 <span class="op">=</span> <span class="va">pop2</span><span class="op">$</span><span class="va">sample</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'#7D83FF'</span>, <span class="st">'#007FFF'</span><span class="op">)</span>, scale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1000</span><span class="op">)</span>, font.size <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">rs_plot_tips</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/argplot.html">argplot</a></span><span class="op">(</span><span class="va">arg_toplot2</span>, pop1 <span class="op">=</span> <span class="va">pop1</span><span class="op">$</span><span class="va">sample</span>, pop2 <span class="op">=</span> <span class="va">pop2</span><span class="op">$</span><span class="va">sample</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'#7D83FF'</span>, <span class="st">'#007FFF'</span><span class="op">)</span>, scale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1000</span><span class="op">)</span>, font.size <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span></span></code></pre></div>
+<p><img src="multipanel_argtips.png" class="r-plt" alt="" width="400px" height="400px" style="display: block; margin: auto;"></p>
+<p>We see that the TMRCA<sub>W</sub> is also reduced relative to the
+background, thus confirming that the recurrent selection ARG matches our
+expected patterns of TMRCA<sub>B</sub> and TMRCA<sub>W</sub>.</p>
+<p>Thank you for your interest in ARGHelpR, please contact Keaka
+Farleigh if you have any questions or suggestions.</p>
+</div>
+</div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
