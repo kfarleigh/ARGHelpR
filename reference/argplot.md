@@ -53,6 +53,12 @@ a phylogeny with tips colored according to population.
 
 ``` r
 # \donttest{
-test_plot <- argplot(arg = rattlesnake_args[1,4], pop1 = pop1_inds, pop2 = pop2_inds, col = c("#71BED6","#EDAF49"))# }
-#> Error in rattlesnake_args[1, 4]: incorrect number of dimensions
+
+data(rattlesnake_args)
+data(rattlesnake_pops)
+
+pop2 <- rattlesnake_pops[which(rattlesnake_pops$species == "pop2"),]
+pop1 <- rattlesnake_pops[which(rattlesnake_pops$species == "pop1"),]
+
+test_plot <- argplot(arg = rattlesnake_args[[1]][1,4], pop1 = pop1$sample, pop2 = pop2$sample, col = c("#71BED6","#EDAF49"))# }
 ```

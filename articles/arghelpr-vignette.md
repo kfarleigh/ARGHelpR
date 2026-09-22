@@ -1,5 +1,9 @@
 # arghelpr-vignette
 
+Written by: Keaka Farleigh, Ph.D.  
+Date: September, 22nd, 2026.  
+Date last modified: September, 22nd, 2026
+
 ## Purpose
 
 To show you how to use ARGHelpR to summarize ancestral recombination
