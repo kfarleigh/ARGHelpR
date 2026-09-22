@@ -51,7 +51,7 @@ After we have a bed file, we can read it into R.
 data <- read.delim("my_argdata.bed", header = TRUE)
 
 # Split each row into a list element
-data_list <- split(rattlesnake_args, seq_len(nrow(rattlesnake_args)))
+data_list <- split(data, seq_len(nrow(data)))
 ```
 
 Let’s look at the data already in ARGHelpR. We see that the ARG data
