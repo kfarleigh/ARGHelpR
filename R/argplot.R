@@ -29,15 +29,16 @@ argplot <- function(arg, pop1, pop2, col = c("#6C6EA0", "#1A1F16"), scale = NULL
 
   pops_df_ord <- pops_df[base::match(tip_ord, pops_df$individual),]
 
-
-  # Plot the tree
-  arg_tree <- phytools::plotTree(tree, direction = "downwards", cex = font.size, show.tip.label = TRUE, tip.color = pops_df_ord$color)
-
   if(!is.null(scale)){
 
     # If the user supplies a scale
-    arg_tree <- phytools::plotTree(tree, direction = "downwards", cex = font.size, ylim = c(scale[1], scale[2]), show.tip.label = TRUE, tip.color = pops_df_ord$color)
+    arg_tree <- plot(tree, direction = "downwards", cex = font.size, y.lim = c(scale[1], scale[2]), show.tip.label = TRUE, tip.color = pops_df_ord$color)
 
+
+  } else{
+
+    # Plot the tree
+    arg_tree <- plot(tree, direction = "downwards", cex = font.size, show.tip.label = TRUE, tip.color = pops_df_ord$color)
 
   }
 

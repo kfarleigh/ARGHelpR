@@ -2,9 +2,9 @@
 
 pops <- read.delim("/Users/kfarleigh/Downloads/pis_con.popmap", header = FALSE)
 
-pops$species <- "continental"
+pops$species <- "pop1"
 
-pops$species[c(1:3)] <- "pisgah"
+pops$species[c(1:3)] <- "pop2"
 
 colnames(pops)[1] <- "sample"
 

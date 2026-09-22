@@ -28,8 +28,6 @@ navbar:
           href: articles/ARGHelpR_identifyfuncs.html
         - text: Formatting data
           href: articles/ARGHelpR_formatting.html
-        - text: Plotting ARGs
-          href: articles/ARGHelpR_plotting.html
     github:
       icon: fa-github
       href: https://github.com/kfarleigh/ARGHelpR
