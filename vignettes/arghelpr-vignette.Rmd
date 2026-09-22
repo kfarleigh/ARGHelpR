@@ -46,7 +46,7 @@ After we have a bed file, we can read it into R.
 data <- read.delim("my_argdata.bed", header = TRUE)
 
 # Split each row into a list element
-data_list <- split(rattlesnake_args, seq_len(nrow(rattlesnake_args)))
+data_list <- split(data, seq_len(nrow(data)))
 ```
 
 Let's look at the data already in ARGHelpR. We see that the ARG data (`rattlesnake_args`) is a list with many elements and that we also have a population assignment file (`rattlesnake_pops`). The `rattlesnake_pops` contains population assignment data for each haplotype in your data. This is why there are `_1` and `_2` appended to the individual names in our data. 
