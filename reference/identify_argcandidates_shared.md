@@ -27,7 +27,9 @@ identify_argcandidates_shared(
 - analysis:
 
   a character vector indicating the types of args you want to identify.
-  Options are "all" for all types, "BS", "INT".
+  Options are "all" for all types, "BS" for balancing selection, "INT"
+  for introgression, and "BSINT" for balancing selection +
+  introgression.
 
 - background:
 
