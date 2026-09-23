@@ -16,7 +16,7 @@
 - [`rattlesnake_args`](https://kfarleigh.github.io/ARGHelpR/reference/rattlesnake_args.md)
   : Example list where each element is a data frame representing a
   single ancestral recombination graph; this was generated using data
-  from Farleigh et al. (2026).
+  from Farleigh et al. (2026); sample IDs have been anonymized.
 - [`rattlesnake_pops`](https://kfarleigh.github.io/ARGHelpR/reference/rattlesnake_pops.md)
   : A data frame containing the population assignments for different
   haplotypes in the rattlesnake_args data.
