@@ -3,7 +3,7 @@
 \docType{data}
 \name{rattlesnake_args}
 \alias{rattlesnake_args}
-\title{Example list where each element is a data frame representing a single ancestral recombination graph; this was generated using data from Farleigh et al. (2026).}
+\title{Example list where each element is a data frame representing a single ancestral recombination graph; this was generated using data from Farleigh et al. (2026); sample IDs have been anonymized.}
 \format{
 A list with data frames with four columns:
 \describe{

@@ -1,6 +1,6 @@
 ## code to prepare `rattlesnake_pops` dataset goes here
 
-pops <- read.delim("/Users/kfarleigh/Downloads/pis_con.popmap", header = FALSE)
+pops <- read.delim("/Users/kfarleigh/Downloads/snakes.popmap", header = FALSE)
 
 pops$species <- "pop1"
 

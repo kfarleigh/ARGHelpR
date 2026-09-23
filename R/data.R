@@ -1,4 +1,4 @@
-#' Example list where each element is a data frame representing a single ancestral recombination graph; this was generated using data from Farleigh et al. (2026).
+#' Example list where each element is a data frame representing a single ancestral recombination graph; this was generated using data from Farleigh et al. (2026); sample IDs have been anonymized.
 #'
 #'
 #' A list where each element is a data frame representing a single ancestral recombination graph.
