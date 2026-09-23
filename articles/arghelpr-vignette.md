@@ -11,12 +11,12 @@ graphs (ARGs), identify ARGs that may be indicative of selection
 influencing a particular region, identify ARGs that may shown signs of
 introgression, and visualize these results.
 
-**Note we infer ARGs that represent regions influenced by selection and
-those that represent introgressed regions. This is only for the purposes
-of showing you how ARGHelpR works. You must understand you study system
-and determien which of these analyses are appropriate. For example, is
-there support for introgression or divergence? Please email Keaka
-Farleigh if you have any questions**.
+**Note. in this vignette we infer ARGs that represent regions influenced
+by selection and those that represent introgressed regions. This is only
+for the purposes of showing you how ARGHelpR works. You must understand
+you study system and determine which of these analyses are appropriate.
+For example, is there support for introgression or divergence? Please
+email Keaka Farleigh if you have any questions**.
 
 Please see the [What’s an ARG
 article](https://kfarleigh.github.io/ARGHelpR/articles/ARGHelpR_arg_background.html)
@@ -208,6 +208,10 @@ table(divergence_cands_df$scenario)
 #>   51    1   32   37
 ```
 
+We see that we have ARGs associated with each divergence scenario,
+supporting that different forms of selection are influencing different
+regions of the genome.
+
 ### 4. Identify introgression and balancing selection candidates
 
 Now we will use the `identify_argcandidates_shared` function to identify
@@ -235,6 +239,9 @@ table(intro_cands_df$scenario)
 #>  51 182
 ```
 
+We have ARGs associated with expectations under models of balancing
+selection and introgression.
+
 ### 5. Visualize ARGs
 
 Finally, we will plot the ARGs to show the patterns that we are
@@ -245,7 +252,8 @@ assign to each individual. You can also supply a scale and font size if
 you wish (`scale` and `font.size` arguments). The scale argument is
 particularly useful when you want to plot multiple args together; we
 will plot a random ARG and a recurrent selection (RS) ARG to see how
-this is useful.
+this is useful. Remember, recurrent selection is expected to reduce the
+TMRCA_(B) and TMRCA_(W).
 
 ``` r
 
@@ -299,9 +307,9 @@ rs_plot_tips <- argplot(arg_toplot2, pop1 = pop1$sample, pop2 = pop2$sample, col
 
 ![](multipanel_argtips.png)
 
-We see that the TMRCA_(W) is also reduced relative to the background,
-thus confirming that the recurrent selection ARG matches our expected
-patterns of TMRCA_(B) and TMRCA_(W).
+We see that the TMRCA_(W) is also reduced relative to the background in
+pop 2, thus confirming that the recurrent selection ARG matches our
+expected patterns of TMRCA_(B) and TMRCA_(W).
 
 Thank you for your interest in ARGHelpR, please contact Keaka Farleigh
 if you have any questions or suggestions.
