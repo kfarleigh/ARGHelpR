@@ -1,7 +1,7 @@
 #' Identify ancestral recombination graphs under selection that correspond to models of shared variation (introgression and balancing selection).
 #'
 #' @param dat a dataframe of ancestral recombination graph statistics calculated using the argstats function.
-#' @param analysis a character vector indicating the types of args you want to identify. Options are "all" for all types, "BS", "INT".
+#' @param analysis a character vector indicating the types of args you want to identify. Options are "all" for all types, "BS" for balancing selection, "INT" for introgression, and "BSINT" for balancing selection + introgression.
 #' @param background a dataframe of ancestral recombination graph statistics calculated using the argstats function. If supplied this will be used to define thresholds and the dat argument will be treated as the test set.
 #' @param tmrca.high.threshold a numeric value to customize the tmrca threshold used to identify ARGs associated with balancing selection.
 #' @param pop1.threshold a numeric value to customize the pop1 tmrcaw threshold used to identify ARGs associated with introgression.
@@ -34,6 +34,7 @@ identify_argcandidates_shared <- function(dat, analysis = "all", background = NU
     if(is.null(tmrca.high.threshold)){
       # Set balancing selection thresholds
       tmrca.thresh <- stats::quantile(dat$tmrca, probs = c(0.9,0.95,1), na.rm = TRUE)[2]
+      tmrca50.thresh <- stats::quantile(dat$tmrca, probs = c(0.5), na.rm = TRUE)[1]
     } else{
       tmrca.thresh <- tmrca.high.threshold
     }
@@ -41,11 +42,13 @@ identify_argcandidates_shared <- function(dat, analysis = "all", background = NU
     # Set within-population thresholds
     if(is.null(pop1.threshold)){
       pop1.tmrcaw.thresh <- stats::quantile(dat$pop1.meantmrcaw, probs = c(0.05,0.1), na.rm = TRUE)[1]
+      pop1.tmrcaw.95thresh <- stats::quantile(dat$pop1.meantmrcaw, probs = c(0.95), na.rm = TRUE)[1]
     } else{
       pop1.tmrcaw.thresh <- pop1.threshold
     }
     if(is.null(pop2.threshold)){
       pop2.tmrcaw.thresh <- stats::quantile(dat$pop2.meantmrcaw, probs = c(0.05,0.1), na.rm = TRUE)[1]
+      pop2.tmrcaw.95thresh <- stats::quantile(dat$pop2.meantmrcaw, probs = c(0.95), na.rm = TRUE)[1]
     } else{
       pop2.tmrcaw.thresh <- pop2.threshold
     }
@@ -70,11 +73,16 @@ identify_argcandidates_shared <- function(dat, analysis = "all", background = NU
     } else{
       INT_args <- NULL
     }
+    if("BSINT" %in% analysis | analysis == "all"){
+      BSINT_args <- dat %>% dplyr::filter((tmrca > tmrca.iqr.low & tmrca < tmrca50.thresh) &  (pop1.meantmrcaw >= pop1.tmrcaw.95thresh & pop2.meantmrcaw >= pop2.tmrcaw.95thresh))
+    } else{
+      BSINT_args <- NULL
+    }
 
 
-    Output <- list(BS_args, INT_args)
+    Output <- list(BS_args, INT_args, BSINT_args)
 
-    names(Output) <- c("BS", "INT")
+    names(Output) <- c("BS", "INT","BSINT")
 
 
   } else {
@@ -82,6 +90,7 @@ identify_argcandidates_shared <- function(dat, analysis = "all", background = NU
     if(is.null(tmrca.high.threshold)){
       # Set balancing selection thresholds
       tmrca.thresh <- stats::quantile(background$tmrca, probs = c(0.9,0.95,1), na.rm = TRUE)[2]
+      tmrca50.thresh <- stats::quantile(dat$tmrca, probs = c(0.5), na.rm = TRUE)[1]
     } else{
       tmrca.thresh <- tmrca.high.threshold
     }
@@ -89,11 +98,13 @@ identify_argcandidates_shared <- function(dat, analysis = "all", background = NU
     # Set within-population thresholds
     if(is.null(pop1.threshold)){
       pop1.tmrcaw.thresh <- stats::quantile(background$pop1.meantmrcaw, probs = c(0.05,0.1), na.rm = TRUE)[1]
+      pop1.tmrcaw.95thresh <- stats::quantile(dat$pop1.meantmrcaw, probs = c(0.95), na.rm = TRUE)[1]
     } else{
       pop1.tmrcaw.thresh <- pop1.threshold
     }
     if(is.null(pop2.threshold)){
       pop2.tmrcaw.thresh <- stats::quantile(background$pop2.meantmrcaw, probs = c(0.05,0.1), na.rm = TRUE)[1]
+      pop2.tmrcaw.95thresh <- stats::quantile(dat$pop2.meantmrcaw, probs = c(0.95), na.rm = TRUE)[1]
     } else{
       pop2.tmrcaw.thresh <- pop2.threshold
     }
@@ -118,17 +129,21 @@ identify_argcandidates_shared <- function(dat, analysis = "all", background = NU
     } else{
       INT_args <- NULL
     }
+    if("BSINT" %in% analysis | analysis == "all"){
+      BSINT_args <- dat %>% dplyr::filter((tmrca > tmrca.iqr.low & tmrca < tmrca50.thresh) &  (pop1.meantmrcaw >= pop1.tmrcaw.95thresh & pop2.meantmrcaw >= pop2.tmrcaw.95thresh))
+    } else{
+      BSINT_args <- NULL
+    }
 
 
-    Output <- list(BS_args, INT_args)
+    Output <- list(BS_args, INT_args, BSINT_args)
 
-    names(Output) <- c("BS", "INT")
-
+    names(Output) <- c("BS", "INT", "BSINT")
   }
 
   # Set list of possible analyses
-  Stat <- c("BS", "INT")
-  Stat_idx <- c(1,2)
+  Stat <- c("BS", "INT", "BSINT")
+  Stat_idx <- c(1,2,3)
 
   if(length(analysis) == 1 && analysis ==  "all"){
     return(Output)

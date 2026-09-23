@@ -17,7 +17,7 @@ identify_argcandidates_shared(
 \arguments{
 \item{dat}{a dataframe of ancestral recombination graph statistics calculated using the argstats function.}
 
-\item{analysis}{a character vector indicating the types of args you want to identify. Options are "all" for all types, "BS", "INT".}
+\item{analysis}{a character vector indicating the types of args you want to identify. Options are "all" for all types, "BS" for balancing selection, "INT" for introgression, and "BSINT" for balancing selection + introgression.}
 
 \item{background}{a dataframe of ancestral recombination graph statistics calculated using the argstats function. If supplied this will be used to define thresholds and the dat argument will be treated as the test set.}
 
