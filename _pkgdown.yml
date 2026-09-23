@@ -31,9 +31,9 @@ navbar:
     github:
       icon: fa-github
       href: https://github.com/kfarleigh/ARGHelpR
-  footer:
+footer:
     structure:
       left: developed_by
       right: Funding
     components:
-        Funding: ARGHelpR is funded by an National Science Foundation Postdoctoral Research Fellowhip in Biology to KF (DBI-2409958) and start-up funds from the University of Virginia to DRS. Logo designed by DKH.
+      Funding: ARGHelpR is funded by an National Science Foundation Postdoctoral Research Fellowhip in Biology to KF (DBI-2409958) and start-up funds from the University of Virginia to DRS. Logo designed by DKH.

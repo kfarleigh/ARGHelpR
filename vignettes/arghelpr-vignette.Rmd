@@ -22,7 +22,7 @@ Date last modified: September, 22nd, 2026
 
 To show you how to use ARGHelpR to summarize ancestral recombination graphs (ARGs), identify ARGs that may be indicative of selection influencing a particular region, identify ARGs that may shown signs of introgression, and visualize these results.
 
-**Note we infer ARGs that represent regions influenced by selection and those that represent introgressed regions. This is only for the purposes of showing you how ARGHelpR works. You must understand you study system and determien which of these analyses are appropriate. For example, is there support for introgression or divergence? Please email Keaka Farleigh if you have any questions**.
+**Note. in this vignette we infer ARGs that represent regions influenced by selection and those that represent introgressed regions. This is only for the purposes of showing you how ARGHelpR works. You must understand you study system and determine which of these analyses are appropriate. For example, is there support for introgression or divergence? Please email Keaka Farleigh if you have any questions**.
 
 Please see the [What's an ARG article](https://kfarleigh.github.io/ARGHelpR/articles/ARGHelpR_arg_background.html) if you would like some background on ARGs.
 
@@ -113,6 +113,8 @@ divergence_cands_df$scenario <- sub("\\..*", "", divergence_cands_df$scenario)
 table(divergence_cands_df$scenario)
 ```
 
+We see that we have ARGs associated with each divergence scenario, supporting that different forms of selection are influencing different regions of the genome.
+
 ### 4. Identify introgression and balancing selection candidates
 
 Now we will use the `identify_argcandidates_shared` function to identify signals of balancing selection and introgression. This works in the same way as `identify_argcandidates_divergence`.
@@ -135,10 +137,11 @@ table(intro_cands_df$scenario)
 
 ```
 
+We have ARGs associated with expectations under models of balancing selection and introgression. 
 
 ### 5. Visualize ARGs
 
-Finally, we will plot the ARGs to show the patterns that we are identifying. We will use the `argplot` function. This function requires an arg (newick string), list of individuals in each population (`pop1` and `pop2` arguments), and the color (`col` argument) you would like to assign to each individual. You can also supply a scale and font size if you wish (`scale` and `font.size` arguments). The scale argument is particularly useful when you want to plot multiple args together; we will plot a random ARG and a recurrent selection (RS) ARG to see how this is useful.
+Finally, we will plot the ARGs to show the patterns that we are identifying. We will use the `argplot` function. This function requires an arg (newick string), list of individuals in each population (`pop1` and `pop2` arguments), and the color (`col` argument) you would like to assign to each individual. You can also supply a scale and font size if you wish (`scale` and `font.size` arguments). The scale argument is particularly useful when you want to plot multiple args together; we will plot a random ARG and a recurrent selection (RS) ARG to see how this is useful. Remember, recurrent selection is expected to reduce the TMRCA~B~ and TMRCA~W~. 
 
 ```{r plot args, eval=FALSE}
 
@@ -194,7 +197,7 @@ rs_plot_tips <- argplot(arg_toplot2, pop1 = pop1$sample, pop2 = pop2$sample, col
 knitr::include_graphics("multipanel_argtips.png")
 ```
 
-We see that the TMRCA~W~ is also reduced relative to the background, thus confirming that the recurrent selection ARG matches our expected patterns of TMRCA~B~ and TMRCA~W~.
+We see that the TMRCA~W~ is also reduced relative to the background in pop 2, thus confirming that the recurrent selection ARG matches our expected patterns of TMRCA~B~ and TMRCA~W~.
 
 
 Thank you for your interest in ARGHelpR, please contact Keaka Farleigh if you have any questions or suggestions. 
