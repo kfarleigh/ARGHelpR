@@ -51,7 +51,10 @@
 <span>  tmrca.high.threshold <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  pop1.threshold <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  pop2.threshold <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  tmrca.iqr.low.threshold <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  tmrca.iqr.low.threshold <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  tmrca.50.threshold <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  pop1.tmrcaw.95threshold <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  pop2.tmrcaw.95threshold <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -85,6 +88,18 @@
 
 <dt id="arg-tmrca-iqr-low-threshold">tmrca.iqr.low.threshold<a class="anchor" aria-label="anchor" href="#arg-tmrca-iqr-low-threshold"></a></dt>
 <dd><p>a numeric value to customize the lower tmrca threshold used to identify ARGs associated with introgression.</p></dd>
+
+
+<dt id="arg-tmrca-threshold">tmrca.50.threshold<a class="anchor" aria-label="anchor" href="#arg-tmrca-threshold"></a></dt>
+<dd><p>a numeric value to customize the tmrca.50 threshold used to identify ARGs associated with the combined balancing selection + introgression scenario.</p></dd>
+
+
+<dt id="arg-pop-tmrcaw-threshold">pop1.tmrcaw.95threshold<a class="anchor" aria-label="anchor" href="#arg-pop-tmrcaw-threshold"></a></dt>
+<dd><p>a numeric value to customize the pop1.tmrcaw.95 threshold used to identify ARGs associated with the combined balancing selection + introgression scenario.</p></dd>
+
+
+<dt id="arg-pop-tmrcaw-threshold">pop2.tmrcaw.95threshold<a class="anchor" aria-label="anchor" href="#arg-pop-tmrcaw-threshold"></a></dt>
+<dd><p>a numeric value to customize the pop2.tmrcaw.95 threshold used to identify ARGs associated with the combined balancing selection + introgression scenario.</p></dd>
 
 </dl></div>
     <div class="section level2">
