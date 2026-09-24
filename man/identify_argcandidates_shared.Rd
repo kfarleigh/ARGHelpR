@@ -11,7 +11,10 @@ identify_argcandidates_shared(
   tmrca.high.threshold = NULL,
   pop1.threshold = NULL,
   pop2.threshold = NULL,
-  tmrca.iqr.low.threshold = NULL
+  tmrca.iqr.low.threshold = NULL,
+  tmrca.50.threshold = NULL,
+  pop1.tmrcaw.95threshold = NULL,
+  pop2.tmrcaw.95threshold = NULL
 )
 }
 \arguments{
@@ -28,6 +31,12 @@ identify_argcandidates_shared(
 \item{pop2.threshold}{a numeric value to customize the pop2 tmrcaw threshold used to identify ARGs associated with introgression.}
 
 \item{tmrca.iqr.low.threshold}{a numeric value to customize the lower tmrca threshold used to identify ARGs associated with introgression.}
+
+\item{tmrca.50.threshold}{a numeric value to customize the tmrca.50 threshold used to identify ARGs associated with the combined balancing selection + introgression scenario.}
+
+\item{pop1.tmrcaw.95threshold}{a numeric value to customize the pop1.tmrcaw.95 threshold used to identify ARGs associated with the combined balancing selection + introgression scenario.}
+
+\item{pop2.tmrcaw.95threshold}{a numeric value to customize the pop2.tmrcaw.95 threshold used to identify ARGs associated with the combined balancing selection + introgression scenario.}
 }
 \value{
 a list containing ARGs that were identified as candidates

@@ -7,6 +7,9 @@
 #' @param pop1.threshold a numeric value to customize the pop1 tmrcaw threshold used to identify ARGs associated with introgression.
 #' @param pop2.threshold a numeric value to customize the pop2 tmrcaw threshold used to identify ARGs associated with introgression.
 #' @param tmrca.iqr.low.threshold a numeric value to customize the lower tmrca threshold used to identify ARGs associated with introgression.
+#' @param tmrca.50.threshold a numeric value to customize the tmrca.50 threshold used to identify ARGs associated with the combined balancing selection + introgression scenario.
+#' @param pop1.tmrcaw.95threshold a numeric value to customize the pop1.tmrcaw.95 threshold used to identify ARGs associated with the combined balancing selection + introgression scenario.
+#' @param pop2.tmrcaw.95threshold a numeric value to customize the pop2.tmrcaw.95 threshold used to identify ARGs associated with the combined balancing selection + introgression scenario.
 #'
 #' @returns a list containing ARGs that were identified as candidates
 #' @export
@@ -24,7 +27,7 @@
 #' stat_df <- do.call("rbind", stat_res)
 #'
 #' Test <- identify_argcandidates_shared(dat = stat_df, analysis = "all")}
-identify_argcandidates_shared <- function(dat, analysis = "all", background = NULL, tmrca.high.threshold = NULL, pop1.threshold = NULL, pop2.threshold = NULL, tmrca.iqr.low.threshold = NULL){
+identify_argcandidates_shared <- function(dat, analysis = "all", background = NULL, tmrca.high.threshold = NULL, pop1.threshold = NULL, pop2.threshold = NULL, tmrca.iqr.low.threshold = NULL, tmrca.50.threshold = NULL, pop1.tmrcaw.95threshold = NULL, pop2.tmrcaw.95threshold = NULL){
 
   tmrca <- pop1.meantmrcaw <- pop2.meantmrcaw <- NULL
 
@@ -34,23 +37,39 @@ identify_argcandidates_shared <- function(dat, analysis = "all", background = NU
     if(is.null(tmrca.high.threshold)){
       # Set balancing selection thresholds
       tmrca.thresh <- stats::quantile(dat$tmrca, probs = c(0.9,0.95,1), na.rm = TRUE)[2]
-      tmrca50.thresh <- stats::quantile(dat$tmrca, probs = c(0.5), na.rm = TRUE)[1]
     } else{
       tmrca.thresh <- tmrca.high.threshold
+    }
+
+    if(is.null(tmrca.50.threshold)){
+      tmrca50.thresh <- stats::quantile(dat$tmrca, probs = c(0.5), na.rm = TRUE)[1]
+    } else{
+      tmrca50.thresh <- tmrca.50.threshold
     }
 
     # Set within-population thresholds
     if(is.null(pop1.threshold)){
       pop1.tmrcaw.thresh <- stats::quantile(dat$pop1.meantmrcaw, probs = c(0.05,0.1), na.rm = TRUE)[1]
-      pop1.tmrcaw.95thresh <- stats::quantile(dat$pop1.meantmrcaw, probs = c(0.95), na.rm = TRUE)[1]
     } else{
       pop1.tmrcaw.thresh <- pop1.threshold
     }
+
+    if(is.null(pop1.tmrcaw.95threshold)){
+      pop1.tmrcaw.95thresh <- stats::quantile(dat$pop1.meantmrcaw, probs = c(0.95), na.rm = TRUE)[1]
+    } else{
+      pop1.tmrcaw.95thresh <- pop1.tmrcaw.95threshold
+    }
+
     if(is.null(pop2.threshold)){
       pop2.tmrcaw.thresh <- stats::quantile(dat$pop2.meantmrcaw, probs = c(0.05,0.1), na.rm = TRUE)[1]
-      pop2.tmrcaw.95thresh <- stats::quantile(dat$pop2.meantmrcaw, probs = c(0.95), na.rm = TRUE)[1]
     } else{
       pop2.tmrcaw.thresh <- pop2.threshold
+    }
+
+    if(is.null(pop2.tmrcaw.95threshold)){
+      pop2.tmrcaw.95thresh <- stats::quantile(dat$pop2.meantmrcaw, probs = c(0.95), na.rm = TRUE)[1]
+    } else{
+      pop2.tmrcaw.95thresh <- pop2.tmrcaw.95threshold
     }
 
     if(is.null(tmrca.iqr.low.threshold)){
@@ -89,33 +108,47 @@ identify_argcandidates_shared <- function(dat, analysis = "all", background = NU
 
     if(is.null(tmrca.high.threshold)){
       # Set balancing selection thresholds
-      tmrca.thresh <- stats::quantile(background$tmrca, probs = c(0.9,0.95,1), na.rm = TRUE)[2]
-      tmrca50.thresh <- stats::quantile(dat$tmrca, probs = c(0.5), na.rm = TRUE)[1]
+      tmrca.thresh <- stats::quantile(dat$tmrca, probs = c(0.9,0.95,1), na.rm = TRUE)[2]
     } else{
       tmrca.thresh <- tmrca.high.threshold
     }
 
+    if(is.null(tmrca.50.threshold)){
+      tmrca50.thresh <- stats::quantile(dat$tmrca, probs = c(0.5), na.rm = TRUE)[1]
+    } else{
+      tmrca50.thresh <- tmrca.50.threshold
+    }
+
     # Set within-population thresholds
     if(is.null(pop1.threshold)){
-      pop1.tmrcaw.thresh <- stats::quantile(background$pop1.meantmrcaw, probs = c(0.05,0.1), na.rm = TRUE)[1]
-      pop1.tmrcaw.95thresh <- stats::quantile(dat$pop1.meantmrcaw, probs = c(0.95), na.rm = TRUE)[1]
+      pop1.tmrcaw.thresh <- stats::quantile(dat$pop1.meantmrcaw, probs = c(0.05,0.1), na.rm = TRUE)[1]
     } else{
       pop1.tmrcaw.thresh <- pop1.threshold
     }
+
+    if(is.null(pop1.tmrcaw.95threshold)){
+      pop1.tmrcaw.95thresh <- stats::quantile(dat$pop1.meantmrcaw, probs = c(0.95), na.rm = TRUE)[1]
+    } else{
+      pop1.tmrcaw.95thresh <- pop1.tmrcaw.95threshold
+    }
+
     if(is.null(pop2.threshold)){
-      pop2.tmrcaw.thresh <- stats::quantile(background$pop2.meantmrcaw, probs = c(0.05,0.1), na.rm = TRUE)[1]
-      pop2.tmrcaw.95thresh <- stats::quantile(dat$pop2.meantmrcaw, probs = c(0.95), na.rm = TRUE)[1]
+      pop2.tmrcaw.thresh <- stats::quantile(dat$pop2.meantmrcaw, probs = c(0.05,0.1), na.rm = TRUE)[1]
     } else{
       pop2.tmrcaw.thresh <- pop2.threshold
     }
 
+    if(is.null(pop2.tmrcaw.95threshold)){
+      pop2.tmrcaw.95thresh <- stats::quantile(dat$pop2.meantmrcaw, probs = c(0.95), na.rm = TRUE)[1]
+    } else{
+      pop2.tmrcaw.95thresh <- pop2.tmrcaw.95threshold
+    }
+
     if(is.null(tmrca.iqr.low.threshold)){
-      tmrca.iqr.low <- stats::quantile(background$tmrca, probs = c(0.25), na.rm = TRUE)[1]
+      tmrca.iqr.low <- stats::quantile(dat$tmrca, probs = c(0.25), na.rm = TRUE)[1]
     } else{
       tmrca.iqr.low <- tmrca.iqr.low.threshold
     }
-
-
 
     ### Identify args that follow different models
 
