@@ -36,7 +36,7 @@ Because forces of natural selection cause shifts in allele frequencies over time
 
 ## Using ARGHelpR to identify signatures of natural selection and introgression
 
-You can use ARGHelpR to signatures of natural selection and introgression. Please see [this article](https://kfarleigh.github.io/dog) for a tutorial and explaination of how ARGHelpR works. 
+You can use ARGHelpR to signatures of natural selection and introgression. Please see [this article](https://kfarleigh.github.io/ARGHelpR/articles/ARGHelpR_identifyfuncs.html) for a tutorial and explaination of how ARGHelpR works. 
 
 ## Literature Cited
 

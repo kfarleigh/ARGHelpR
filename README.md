@@ -12,10 +12,6 @@ mirror](https://cranlogs.r-pkg.org/badges/ARGHelpR)](https://cran.r-project.org/
 [![R-CMD-check](https://github.com/kfarleigh/ARGHelpR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/kfarleigh/ARGHelpR/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-**WARNING!** This website is currently in development. Links may or may
-not work, please email Keaka Farleigh (<keakafarleigh@gmail.com>) if you
-have any questions.
-
 ## What is *ARGHelpR*?
 
 *ARGHelpR* is an R package that summarizes and visualizes ancestral
