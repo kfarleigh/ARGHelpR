@@ -1,9 +1,5 @@
 # ARGHelpR version 1.0.0 ![](reference/figures/AGH_sticker.png)
 
-**WARNING!** This website is currently in development. Links may or may
-not work, please email Keaka Farleigh (<keakafarleigh@gmail.com>) if you
-have any questions.
-
 ## What is *ARGHelpR*?
 
 *ARGHelpR* is an R package that summarizes and visualizes ancestral

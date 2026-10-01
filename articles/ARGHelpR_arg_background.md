@@ -65,8 +65,8 @@ al. 2020](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pge
 
 You can use ARGHelpR to signatures of natural selection and
 introgression. Please see [this
-article](https://kfarleigh.github.io/dog) for a tutorial and
-explaination of how ARGHelpR works.
+article](https://kfarleigh.github.io/ARGHelpR/articles/ARGHelpR_identifyfuncs.html)
+for a tutorial and explaination of how ARGHelpR works.
 
 ## Literature Cited
 

@@ -13,14 +13,16 @@ and determine which measure is appropriate for your question/objective.
 
 Ancestral recombination graphs (ARGs) can support robust inferences of
 many processes including natural selection and introgression (see [this
-article](https://kfarleigh.github.io/dog) for a background on ARGs).
-Inferring which processes may influence a particular genomic region or
-if they significantly influence a region (see [this
-article](https://kfarleigh.github.io/dog) for visualizations of
-different scenarios) at all requires that we use various statistics that
-evaluate the coalescence between and within populations or species (see
-figure below). In this article, we will explain each statistic, how to
-calculate it, and why it may be relevant for your study.
+article](https://kfarleigh.github.io/ARGHelpR/articles/ARGHelpR_arg_background.html)
+for a background on ARGs). Inferring which processes may influence a
+particular genomic region or if they significantly influence a region
+(see [this
+article](https://kfarleigh.github.io/ARGHelpR/articles/ARGHelpR_identifyfuncs.html)
+for visualizations of different scenarios) at all requires that we use
+various statistics that evaluate the coalescence between and within
+populations or species (see figure below). In this article, we will
+explain each statistic, how to calculate it, and why it may be relevant
+for your study.
 
 ![Figure 1. Cartoons of the ancestral recombination graph statistics
 that ARGHelpR can calculate. Colored tips represent individual
