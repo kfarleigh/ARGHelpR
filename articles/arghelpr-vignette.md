@@ -229,7 +229,7 @@ intro_cands_df$scenario <- sub("\\..*", "", intro_cands_df$scenario)
 table(intro_cands_df$scenario)
 #> 
 #>  BS INT 
-#>  51 182
+#>  53 182
 ```
 
 We have ARGs associated with expectations under models of balancing
