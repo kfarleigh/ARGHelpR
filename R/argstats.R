@@ -42,11 +42,11 @@ argstats <- function(arg.dat, pop1, pop2, pop1.name, pop2.name, n.cores = 1, n.h
       cl <- parallel::makeCluster(n_cores, type = "PSOCK")
 
       # Export data and functions so that we can run everything in parallel
-      parallel::clusterExport(cl, c("arg.dat", "pop1", "pop2", "pop1.name", "pop2.name", "n.haps"))
+      parallel::clusterExport(cl, c("argstats_helper", "arg.dat", "pop1", "pop2", "pop1.name", "pop2.name", "n.haps"))
       parallel::clusterEvalQ(cl, library(ARGHelpR))
 
       # Run it
-      argstat_calcs <- parallel::parLapply(cl, X = arg.dat, fun = argstats_helper, pop1 = pop1, pop2 = pop2, pop1.name = pop1.name, pop2.name = pop2.name, n.haps = n.haps)
+      argstat_calcs <- parallel::parLapply(cl, arg.dat, argstats_helper, pop1 = pop1, pop2 = pop2, pop1.name = pop1.name, pop2.name = pop2.name, n.haps = n.haps)
 
       # Stop the cluster to free up memory
       parallel::stopCluster(cl)

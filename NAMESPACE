@@ -3,6 +3,7 @@
 export("%>%")
 export(argplot)
 export(argstats)
+export(argstats_helper)
 export(identify_argcandidates_divergence)
 export(identify_argcandidates_shared)
 importFrom(magrittr,"%>%")
