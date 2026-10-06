@@ -83,7 +83,7 @@ identify_argcandidates_shared <- function(dat, analysis = "all", background = NU
     ### Identify args that follow different models
 
     if("BS" %in% analysis | analysis == "all"){
-      BS_args <- dat %>% dplyr::filter(tmrca >= tmrca.thresh)
+      BS_args <- dat %>% dplyr::filter(tmrca >= tmrca.thresh | (pop1.meantmrcaw >= pop1.tmrcaw.95thresh & pop2.meantmrcaw >= pop2.tmrcaw.95thresh))
     } else{
       BS_args <- NULL
     }
@@ -153,7 +153,7 @@ identify_argcandidates_shared <- function(dat, analysis = "all", background = NU
     ### Identify args that follow different models
 
     if("BS" %in% analysis | analysis == "all"){
-      BS_args <- background %>% dplyr::filter(tmrca >= tmrca.thresh)
+      BS_args <- background %>% dplyr::filter(tmrca >= tmrca.thresh | (pop1.meantmrcaw >= pop1.tmrcaw.95thresh & pop2.meantmrcaw >= pop2.tmrcaw.95thresh))
     } else{
       BS_args <- NULL
     }
