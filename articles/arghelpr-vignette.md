@@ -2,7 +2,7 @@
 
 Written by: Keaka Farleigh, Ph.D.  
 Date: September, 22nd, 2026.  
-Date last modified: September, 22nd, 2026
+Date last modified: October 15th, 2026
 
 ## Purpose
 
@@ -11,7 +11,7 @@ graphs (ARGs), identify ARGs that may be indicative of selection
 influencing a particular region, identify ARGs that may shown signs of
 introgression, and visualize these results.
 
-**Note. in this vignette we infer ARGs that represent regions influenced
+**Note. In this vignette we infer ARGs that represent regions influenced
 by selection and those that represent introgressed regions. This is only
 for the purposes of showing you how ARGHelpR works. You must understand
 you study system and determine which of these analyses are appropriate.
