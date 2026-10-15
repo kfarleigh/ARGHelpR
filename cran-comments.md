@@ -33,6 +33,12 @@ checking Rd line widths ... NOTE
        Test <- argstats(arg.dat = rattlesnake_args, pop1 = pop1$sample, pop2 = pop2$sample, pop1.name = "pop1", pop2.name = "pop2")
   
   These lines will be truncated in the PDF manual.
+  
+   Possibly misspelled words in DESCRIPTION:
+    ARG (13:139)
+    ARGHelpR (13:263)
+    ARGs (13:303)
+    introgression (4:43)
 ```
 
-It is okay that these lines will be truncated in the PDF manual. 
+It is okay that these lines will be truncated in the PDF manual and the words are not misspelled.
