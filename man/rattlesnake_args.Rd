@@ -25,7 +25,6 @@ data(rattlesnake_args)
 A list where each element is a data frame representing a single ancestral recombination graph.
 }
 \examples{
-data(rattlesnake_args)
 \donttest{
 data(rattlesnake_args)
 data(rattlesnake_pops)
@@ -33,7 +32,8 @@ data(rattlesnake_pops)
 pop2 <- rattlesnake_pops[which(rattlesnake_pops$species == "pop2"),]
 pop1 <- rattlesnake_pops[which(rattlesnake_pops$species == "pop1"),]
 
-Test <- argstats(arg.dat = rattlesnake_args, pop1 = pop1$sample, pop2 = pop2$sample, pop1.name = "pop1", pop2.name = "pop2")}
+Test <- argstats(arg.dat = rattlesnake_args,
+pop1 = pop1$sample, pop2 = pop2$sample, pop1.name = "pop1", pop2.name = "pop2")}
 
 
 
