@@ -38,18 +38,18 @@ argstats <- function(arg.dat, pop1, pop2, pop1.name, pop2.name, n.cores = 1, n.h
 
       # Determine the cores, set argument data
       n_cores <- n.cores
-      arg.dat <- arg.dat
-      pop1 <- pop1
-      pop2 <- pop2
-      pop1.name <- pop1.name
-      pop2.name <- pop2.name
-      n.haps <- n.haps
+      #arg.dat <- arg.dat
+      #pop1 <- pop1
+      #pop2 <- pop2
+      #pop1.name <- pop1.name
+      #pop2.name <- pop2.name
+      #n.haps <- n.haps
 
       # Make the clusters with set number of cores
       cl <- parallel::makeCluster(n_cores, type = "PSOCK")
 
       # Export data and functions so that we can run everything in parallel
-      parallel::clusterExport(cl, c("argstats_helper", "arg.dat", "pop1", "pop2", "pop1.name", "pop2.name", "n.haps"))
+      parallel::clusterExport(cl, c("argstats_helper", "arg.dat", "pop1", "pop2", "pop1.name", "pop2.name", "n.haps"), envir = environment())
       parallel::clusterEvalQ(cl, library(ARGHelpR))
 
       # Run it
