@@ -22,11 +22,11 @@ navbar:
           href: articles/arghelpr-vignette.html
         - text: What's an ARG?
           href: articles/ARGHelpR_arg_background.html
-        - text: Understanding ARG stats
+        - text: Understanding ARG Stats
           href: articles/ARGHelpR_statistics.html
-        - text: Identifying selection and introgression
+        - text: Identifying Selection and Introgression
           href: articles/ARGHelpR_identifyfuncs.html
-        - text: Formatting data
+        - text: Formatting Data
           href: articles/ARGHelpR_formatting.html
     github:
       icon: fa-github
