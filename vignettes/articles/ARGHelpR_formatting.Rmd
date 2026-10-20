@@ -1,5 +1,5 @@
 ---
-title: "Formatting data for ARGHelpR"
+title: "Formatting Data for ARGHelpR"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{ARGHelpR_formatting}

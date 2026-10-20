@@ -20,7 +20,7 @@ navbar:
       menu:
         - text: Vignette
           href: articles/arghelpr-vignette.html
-        - text: What's an ARG?
+        - text: What Are Ancestral Recombination Graphs?
           href: articles/ARGHelpR_arg_background.html
         - text: Understanding ARG Stats
           href: articles/ARGHelpR_statistics.html

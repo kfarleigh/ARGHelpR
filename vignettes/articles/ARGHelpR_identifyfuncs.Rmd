@@ -1,5 +1,5 @@
 ---
-title: "Identify signatures of selection and introgression"
+title: "Identify Signatures of Selection and Introgression"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{ARGHelpR_identifyfuncs}

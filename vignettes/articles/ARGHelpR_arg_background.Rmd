@@ -1,5 +1,5 @@
 ---
-title: "What is an ancestral recombination graph?"
+title: "What Are Ancestral Recombination Graphs?"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{ARGHelpR_arg_background}

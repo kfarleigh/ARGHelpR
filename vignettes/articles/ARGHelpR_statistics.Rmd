@@ -1,5 +1,5 @@
 ---
-title: "Understanding ARG statistics"
+title: "Understanding ARG Statistics"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{ARGHelpR_statistics}
