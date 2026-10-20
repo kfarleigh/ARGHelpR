@@ -1,4 +1,4 @@
-# Formatting data for ARGHelpR
+# Formatting Data for ARGHelpR
 
 Written by: Keaka Farleigh, Ph.D.  
 Date: September, 16th, 2026.  

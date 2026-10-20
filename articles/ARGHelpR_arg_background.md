@@ -1,4 +1,4 @@
-# What is an ancestral recombination graph?
+# What Are Ancestral Recombination Graphs?
 
 Written by: Dylan Highland  
 Reviewed by: Keaka Farleigh, Ph.D.  

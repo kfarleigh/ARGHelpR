@@ -1,4 +1,4 @@
-# Understanding ARG statistics
+# Understanding ARG Statistics
 
 Written by: Keaka Farleigh, Ph.D.  
 Date: September, 14th, 2026.  

@@ -1,4 +1,4 @@
-# Identify signatures of selection and introgression
+# Identify Signatures of Selection and Introgression
 
 Written by: Keaka Farleigh, Ph.D.  
 Date: September, 21st, 2026.  
