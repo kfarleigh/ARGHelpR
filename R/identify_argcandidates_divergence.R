@@ -1,7 +1,7 @@
 #' Identify ancestral recombination graphs under selection that correspond to models of divergence.
 #'
 #' @param dat a dataframe of ancestral recombination graph statistics calculated using the argstats function.
-#' @param analysis a character vector indicating the types of args you want to identify. Options are "all" for all types, "RI", "WP", "RS", "RIWP".
+#' @param analysis a character vector indicating the types of args you want to identify. Options are "all" for all types, "RI", "DS", "RS", "RIDS".
 #' @param background a dataframe of ancestral recombination graph statistics calculated using the argstats function. If supplied this will be used to define thresholds and the dat argument will be treated as the test set.
 #' @param tmrca.threshold a numeric value to customize the tmrca threshold used to identify ARGs associated with reproductive isolation.
 #' @param pop1.threshold a numeric value to customize the pop1 tmrcaw threshold used to identify ARGs associated with within-population selection and recurrent selection.
@@ -76,25 +76,25 @@ identify_argcandidates_divergence <- function(dat, analysis = "all", background 
     } else{
       RI_args <- NULL
     }
-    if("WP" %in% analysis | analysis == "all"){
-      WP_args <- dat %>% dplyr::filter(tmrca < tmrca.iqr.high & tmrca > tmrca.iqr.low & (pop1.meantmrcaw <= pop1.tmrcaw.thresh | pop2.meantmrcaw <= pop2.tmrcaw.thresh))
+    if("DS" %in% analysis | analysis == "all"){
+      DS_args <- dat %>% dplyr::filter(tmrca < tmrca.iqr.high & tmrca > tmrca.iqr.low & (pop1.meantmrcaw <= pop1.tmrcaw.thresh | pop2.meantmrcaw <= pop2.tmrcaw.thresh))
     } else{
-      WP_args <- NULL
+      DS_args <- NULL
     }
     if("RS" %in% analysis | analysis == "all"){
       RS_args <- dat %>% dplyr::filter(tmrca < tmrca.iqr.low & (pop1.meantmrcaw <= pop1.tmrcaw.thresh | pop2.meantmrcaw <= pop2.tmrcaw.thresh))
     } else{
       RS_args <- NULL
     }
-    if("RIWP" %in% analysis | analysis == "all"){
-      RIWP_args <- dat %>% dplyr::filter(tmrca >= tmrca.thresh & (pop1.meantmrcaw <= pop1.tmrcaw.thresh | pop2.meantmrcaw <= pop2.tmrcaw.thresh))
+    if("RIDS" %in% analysis | analysis == "all"){
+      RIDS_args <- dat %>% dplyr::filter(tmrca >= tmrca.thresh & (pop1.meantmrcaw <= pop1.tmrcaw.thresh | pop2.meantmrcaw <= pop2.tmrcaw.thresh))
     } else{
-      RIWP_args <- NULL
+      RIDS_args <- NULL
     }
 
-    Output <- list(RI_args, WP_args, RS_args, RIWP_args)
+    Output <- list(RI_args, DS_args, RS_args, RIDS_args)
 
-    names(Output) <- c("RI", "WP", "RS", "RIWP")
+    names(Output) <- c("RI", "DS", "RS", "RIDS")
 
 
     #BS_args <- dat %>% filter(tmrca >= tmrca.thresh)
@@ -142,30 +142,30 @@ identify_argcandidates_divergence <- function(dat, analysis = "all", background 
     } else{
       RI_args <- NULL
     }
-    if("WP" %in% analysis | analysis == "all"){
-      WP_args <- dat %>% dplyr::filter(tmrca < tmrca.iqr.high & tmrca > tmrca.iqr.low & (pop1.meantmrcaw <= pop1.tmrcaw.thresh | pop2.meantmrcaw <= pop2.tmrcaw.thresh))
+    if("DS" %in% analysis | analysis == "all"){
+      DS_args <- dat %>% dplyr::filter(tmrca < tmrca.iqr.high & tmrca > tmrca.iqr.low & (pop1.meantmrcaw <= pop1.tmrcaw.thresh | pop2.meantmrcaw <= pop2.tmrcaw.thresh))
     } else{
-      WP_args <- NULL
+      DS_args <- NULL
     }
     if("RS" %in% analysis | analysis == "all"){
       RS_args <- dat %>% dplyr::filter(tmrca < tmrca.iqr.low & (pop1.meantmrcaw <= pop1.tmrcaw.thresh | pop2.meantmrcaw <= pop2.tmrcaw.thresh))
     } else{
       RS_args <- NULL
     }
-    if("RIWP" %in% analysis | analysis == "all"){
-      RIWP_args <- dat %>% dplyr::filter(tmrca >= tmrca.thresh & (pop1.meantmrcaw <= pop1.tmrcaw.thresh | pop2.meantmrcaw <= pop2.tmrcaw.thresh))
+    if("RIDS" %in% analysis | analysis == "all"){
+      RIDS_args <- dat %>% dplyr::filter(tmrca >= tmrca.thresh & (pop1.meantmrcaw <= pop1.tmrcaw.thresh | pop2.meantmrcaw <= pop2.tmrcaw.thresh))
     } else{
-      RIWP_args <- NULL
+      RIDS_args <- NULL
     }
 
-    Output <- list(RI_args, WP_args, RS_args, RIWP_args)
+    Output <- list(RI_args, DS_args, RS_args, RIDS_args)
 
-    names(Output) <- c("RI", "WP", "RS", "RIWP")
+    names(Output) <- c("RI", "DS", "RS", "RIDS")
 
   }
 
   # Set list of possible analyses
-  Stat <- c("RI", "WP", "RS", "RIWP")
+  Stat <- c("RI", "DS", "RS", "RIDS")
   Stat_idx <- c(1,2,3,4)
 
   if(length(analysis) == 1 && analysis ==  "all"){
