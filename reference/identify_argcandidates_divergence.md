@@ -28,7 +28,7 @@ identify_argcandidates_divergence(
 - analysis:
 
   a character vector indicating the types of args you want to identify.
-  Options are "all" for all types, "RI", "WP", "RS", "RIWP".
+  Options are "all" for all types, "RI", "DS", "RS", "RIDS".
 
 - background:
 

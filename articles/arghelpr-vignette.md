@@ -197,8 +197,8 @@ divergence_cands_df$scenario <- sub("\\..*", "", divergence_cands_df$scenario)
 # How many of each scenario do we have?
 table(divergence_cands_df$scenario)
 #> 
-#>   RI RIWP   RS   WP 
-#>   51    1   32   37
+#>   DS   RI RIDS   RS 
+#>   37   51    1   32
 ```
 
 We see that we have ARGs associated with each divergence scenario,
