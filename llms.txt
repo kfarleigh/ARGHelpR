@@ -65,4 +65,5 @@ pak::pak("kfarleigh/ARGHelpR")
   Introgression](https://kfarleigh.github.io/ARGHelpR/articles/ARGHelpR_identifyfuncs.md):
 - [Understanding ARG
   Statistics](https://kfarleigh.github.io/ARGHelpR/articles/ARGHelpR_statistics.md):
-- [arghelpr-vignette](https://kfarleigh.github.io/ARGHelpR/articles/arghelpr-vignette.md):
+- [Introduction to
+  ARGHelpR](https://kfarleigh.github.io/ARGHelpR/articles/arghelpr-vignette.md):

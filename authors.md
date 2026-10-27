@@ -27,12 +27,11 @@ Source:
 
 Farleigh K, Highland D, Alderman M, Faber E, Westermann Salas L, Schield
 D (2026). *ARGHelpR: Summarize and Visualize Ancestral Recombination
-Graphs to Identify Genomic Regions that may be Influenced by Different
-Forms of Selection or Involved in Introgression*. R package version
-1.0.0, <https://kfarleigh.github.io/ARGHelpR/>.
+Graphs*. R package version 1.0.0,
+<https://kfarleigh.github.io/ARGHelpR/>.
 
     @Manual{,
-      title = {ARGHelpR: Summarize and Visualize Ancestral Recombination Graphs to Identify Genomic Regions that may be Influenced by Different Forms of Selection or Involved in Introgression},
+      title = {ARGHelpR: Summarize and Visualize Ancestral Recombination Graphs},
       author = {Keaka Farleigh and Dylan K. Highland and Megan G. Alderman and Ellie M. Faber and Lukas {Westermann Salas} and Drew R. Schield},
       year = {2026},
       note = {R package version 1.0.0},

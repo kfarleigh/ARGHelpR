@@ -1,4 +1,4 @@
-# arghelpr-vignette
+# Introduction to ARGHelpR
 
 Written by: Keaka Farleigh, Ph.D.  
 Date: September, 22nd, 2026.  
