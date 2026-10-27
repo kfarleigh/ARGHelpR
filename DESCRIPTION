@@ -1,5 +1,5 @@
 Package: ARGHelpR
-Title: Summarize and Visualize Ancestral Recombination Graphs to Identify Genomic Regions that may be Influenced by Different Forms of Selection or Involved in Introgression
+Title: Summarize and Visualize Ancestral Recombination Graphs 
 Version: 1.0.0
 Authors@R: 
     c(person("Keaka", "Farleigh", , "keakafarleigh@gmail.com", role = c("aut", "cre", "cph"), comment = c(ORCID = "0000-0002-9195-121X")),
@@ -8,7 +8,7 @@ Authors@R:
     person("Ellie M.", "Faber", , "vwf9gq@virginia.edu", role = c("aut", "ctb"), comment = c(ORCID = "0009-0007-3863-5801")),
     person("Lukas", "Westermann Salas", , "kgw6sp@virginia.edu", role = c("aut", "ctb"), comment = c(ORCID = "0009-0008-2716-6699")),
     person("Drew R.", "Schield", , "drew.schield@virginia.edu", role = c("aut","cph", "ctb"), comment = c(ORCID = "0000-0001-7854-9480")))
-Description: Summarize and visualize ancestral recombination graphs. 'ARGHelpR' uses bed files output from ancestral recombination graph (ARG) estimation programs to calculate various statistics that can be used to identify different forms of natural selection. ARGHelpR also allows users to visualize ARGs and provides educational resources on its website.  
+Description: Summarize and visualize ancestral recombination graphs. 'ARGHelpR' uses bed files output from ancestral recombination graph (ARG) estimation programs to calculate various statistics that can be used to identify different forms of natural selection. 'ARGHelpR' also allows users to visualize ARGs and provides educational resources on its website.  
 URL: https://kfarleigh.github.io/ARGHelpR/
 BugReports: https://github.com/kfarleigh/ARGHelpR/issues
 License: GPL (>= 3)

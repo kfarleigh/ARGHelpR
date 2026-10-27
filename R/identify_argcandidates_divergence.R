@@ -13,19 +13,20 @@
 #' @export
 #'
 #' @examples
-#' \donttest{
-#' data("rattlesnake_argstats")
+#' data("rattlesnake_args")
 #' data("rattlesnake_pops")
+#'
+#' rattlesnake_test <- rattlesnake_args[1:5]
 #'
 #' pop2 <- rattlesnake_pops[which(rattlesnake_pops$species == "pop2"),]
 #' pop1 <- rattlesnake_pops[which(rattlesnake_pops$species == "pop1"),]
 #'
-#' stat_res <- argstats(arg.dat = rattlesnake_args, pop1 = pop1$sample,
+#' stat_res <- argstats(arg.dat = rattlesnake_test, pop1 = pop1$sample,
 #' pop2 = pop2$sample, pop1.name = "pop1", pop2.name = "pop2")
 #'
 #' stat_df <- do.call("rbind", stat_res)
 #'
-#' Test <- identify_argcandidates_divergence(dat = stat_df, analysis = "all")}
+#' Test <- identify_argcandidates_divergence(dat = stat_df, analysis = "all")
 identify_argcandidates_divergence <- function(dat, analysis = "all", background = NULL, tmrca.threshold = NULL, pop1.threshold = NULL, pop2.threshold = NULL, tmrca.iqr.low.threshold = NULL, tmrca.iqr.high.threshold = NULL){
 
   tmrca <- pop1.meantmrcaw <- pop2.meantmrcaw <- NULL
