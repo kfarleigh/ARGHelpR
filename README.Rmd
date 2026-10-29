@@ -39,3 +39,7 @@ pak::pak("kfarleigh/ARGHelpR")
 ```
 
 ## Citing *ARGHelpR*
+
+*ARGHelpR* is currently in review. You can use the citation below in the meantime. Thanks for your interest!
+
+Farleigh, K., Highland, D.K., Alderman, M.G., Faber, E.M., Westermann Salas, L., & Schield, D.R. ARGHelpR: An R package to identify evidence of selection and introgression using ancestral recombination graphs. *In Review*. 
