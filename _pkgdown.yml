@@ -18,7 +18,7 @@ navbar:
     Articles:
       text: Articles
       menu:
-        - text: Vignette
+        - text: Vignete
           href: articles/arghelpr-vignette.html
         - text: What Are Ancestral Recombination Graphs?
           href: articles/ARGHelpR_arg_background.html
