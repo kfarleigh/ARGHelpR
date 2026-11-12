@@ -13,15 +13,16 @@
 #' ...
 #' }
 #' @examples
-#' \donttest{
 #' data(rattlesnake_args)
 #' data(rattlesnake_pops)
+#'
+#' rattlesnake_test <- rattlesnake_args[1:5]
 #'
 #' pop2 <- rattlesnake_pops[which(rattlesnake_pops$species == "pop2"),]
 #' pop1 <- rattlesnake_pops[which(rattlesnake_pops$species == "pop1"),]
 #'
-#' Test <- argstats(arg.dat = rattlesnake_args,
-#' pop1 = pop1$sample, pop2 = pop2$sample, pop1.name = "pop1", pop2.name = "pop2")}
+#' Test <- argstats(arg.dat = rattlesnake_test, pop1 = pop1$sample,
+#' pop2 = pop2$sample, pop1.name = "pop1", pop2.name = "pop2")
 #'
 #'
 #'
@@ -41,9 +42,8 @@
 #' ...
 #' }
 #' @examples
-#' \donttest{
 #' data(rattlesnake_pops)
-#' Test <- rattlesnake_pops[,1]}
+#' Test <- rattlesnake_pops[,1]
 #'
 #' @source Farleigh, K., Highland, D. K., Alderman, M. G., Francioli, Y., Hirst, S. R., Faber, E. M., ... & Schield, D. R. (2026). Evolution of genome-wide barriers to gene flow during complex speciation in rattlesnakes. Proceedings of the National Academy of Sciences, 123(21), e2609058123.
 #'

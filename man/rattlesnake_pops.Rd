@@ -23,9 +23,8 @@ data(rattlesnake_pops)
 Data frame containing 2 columns and 30 rows
 }
 \examples{
-\donttest{
 data(rattlesnake_pops)
-Test <- rattlesnake_pops[,1]}
+Test <- rattlesnake_pops[,1]
 
 }
 \keyword{datasets}

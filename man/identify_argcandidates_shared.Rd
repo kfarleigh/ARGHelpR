@@ -45,17 +45,18 @@ a list containing ARGs that were identified as candidates
 Identify ancestral recombination graphs under selection that correspond to models of shared variation (introgression and balancing selection).
 }
 \examples{
-\donttest{
-data("rattlesnake_argstats")
+data("rattlesnake_args")
 data("rattlesnake_pops")
+
+rattlesnake_test <- rattlesnake_args[1:5]
 
 pop2 <- rattlesnake_pops[which(rattlesnake_pops$species == "pop2"),]
 pop1 <- rattlesnake_pops[which(rattlesnake_pops$species == "pop1"),]
 
-stat_res <- argstats(arg.dat = rattlesnake_args, pop1 = pop1$sample,
+stat_res <- argstats(arg.dat = rattlesnake_test, pop1 = pop1$sample,
 pop2 = pop2$sample, pop1.name = "pop1", pop2.name = "pop2")
 
 stat_df <- do.call("rbind", stat_res)
 
-Test <- identify_argcandidates_shared(dat = stat_df, analysis = "all")}
+Test <- identify_argcandidates_shared(dat = stat_df, analysis = "all")
 }
