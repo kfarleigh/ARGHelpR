@@ -30,7 +30,6 @@ Proceedings of the National Academy of Sciences, 123(21), e2609058123.
 ## Examples
 
 ``` r
-# \donttest{
 data(rattlesnake_pops)
-Test <- rattlesnake_pops[,1]# }
+Test <- rattlesnake_pops[,1]
 ```

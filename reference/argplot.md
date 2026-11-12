@@ -52,7 +52,6 @@ a phylogeny with tips colored according to population.
 ## Examples
 
 ``` r
-# \donttest{
 
 data(rattlesnake_args)
 data(rattlesnake_pops)
@@ -61,5 +60,5 @@ pop2 <- rattlesnake_pops[which(rattlesnake_pops$species == "pop2"),]
 pop1 <- rattlesnake_pops[which(rattlesnake_pops$species == "pop1"),]
 
 test_plot <- argplot(arg = rattlesnake_args[[1]][1,4], pop1 = pop1$sample,
-pop2 = pop2$sample, col = c("#71BED6","#EDAF49"))# }
+pop2 = pop2$sample, col = c("#71BED6","#EDAF49"))
 ```
