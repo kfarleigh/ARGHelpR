@@ -8,7 +8,7 @@
 #' @param n.cores a numeric value indicating the number of cores to run. Default is 1. Anything greater than 1 will run calcualtions in parallel. WARNING increasing this number too high can crash your computer depending on your dataset.
 #' @param n.haps a numeric value indicating the minimum number of haplotypes to identify a clade.
 #'
-#' @returns A list of elements. Each element is a data frame containing the calculated statistics, the relevant window, and relevant arg. The statistics include the time to the most recent common ancestor between populations/species (tmrca) and estimates of the time to most recent common ancestor within populations/species (tmrcaw). The output also indicates if populations/species are monophyletic and which population/species corresponds to which population.
+#' @return A list of elements. Each element is a data frame containing the calculated statistics, the relevant window, and relevant arg. The statistics include the time to the most recent common ancestor between populations/species (tmrca) and estimates of the time to most recent common ancestor within populations/species (tmrcaw). The output also indicates if populations/species are monophyletic and which population/species corresponds to which population.
 #' @author Keaka Farleigh
 #' @export
 #'

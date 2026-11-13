@@ -7,7 +7,7 @@
 #' @param scale a vector of two numbers. The first number will set the lower bounds of the scale and the second will set the upper bounds. This is useful when you want to compare two args.
 #' @param font.size a numeric indicating the size of the tip labels, this is supplied to the cex argument in phytools plotTree function.
 #'
-#' @returns a phylogeny with tips colored according to population.
+#' @return a phylogeny with tips colored according to population.
 #' @export
 #'
 #' @examples

@@ -9,7 +9,7 @@
 #' @param tmrca.iqr.low.threshold a numeric value to customize the lower tmrca threshold used to identify ARGs associated with within-population selection and recurrent selection.
 #' @param tmrca.iqr.high.threshold a numeric value to customize the upper tmrca threshold used to identify ARGs associated with within-population selection and recurrent selection.
 #'
-#' @returns a list containing ARGs that were identified as candidates
+#' @return a list containing ARGs that were identified as candidates
 #' @export
 #'
 #' @examples

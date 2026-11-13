@@ -11,7 +11,7 @@
 #' @param pop1.tmrcaw.95threshold a numeric value to customize the pop1.tmrcaw.95 threshold used to identify ARGs associated with the combined balancing selection + introgression scenario.
 #' @param pop2.tmrcaw.95threshold a numeric value to customize the pop2.tmrcaw.95 threshold used to identify ARGs associated with the combined balancing selection + introgression scenario.
 #'
-#' @returns a list containing ARGs that were identified as candidates
+#' @return a list containing ARGs that were identified as candidates
 #' @export
 #'
 #' @examples

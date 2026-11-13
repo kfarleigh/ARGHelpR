@@ -1,3 +1,27 @@
+## November 13th, 2026
+
+### CRAN Submission comments
+
+Thank you for your time and comments! Apologies for not roxygenising the previous submission.
+
+```
+All your examples are wrapped in \donttest{} and therefore do not get
+tested.
+
+Please unwrap the examples if that is feasible and if they can be
+executed in < 5 sec for each Rd file or create additionally small toy
+examples to allow automatic testing.
+```
+
+I have run `devtools::document()` to ensure that the updated examples (without `\donttest{}`) are present.
+
+```
+Since you are using 'roxygen2', please make sure to add a @return-tag in
+the corresponding .R-file and re-roxygenize() your .Rd-files.
+```
+
+I have checked the .R files for @return-tags and re-roxygenized() them.
+
 ## October 27th, 2026 
 
 ### CRAN Submission comments
